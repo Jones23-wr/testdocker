@@ -1,0 +1,704 @@
+<%-- 
+    Document   : client
+    Created on : 3 févr. 2023, 23:39:49
+    Author     : JONES
+--%>
+
+<%@page import="java.text.NumberFormat"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.Base64"%>
+<%@page import="java.io.*"%>
+<%@page language="java" import="com.up.load.db"%>
+<%
+    String cliId = request.getParameter("ii");
+    String dateCom = request.getParameter("dd");
+    String mod = request.getParameter("mod");
+    String achatIdd = request.getParameter("achatii");//for edit
+    
+    if(cliId!= null && dateCom != null){
+            try {
+                Connection con = db.getConnection();
+                //PreparedStatement pst = con.prepareStatement("SELECT * FROM client");
+                //PreparedStatement ptm = con.prepareStatement("SELECT * FROM achat LEFT JOIN client ON achat.id_cli = client.id_cli WHERE client.id_cli=? ORDER BY id_achat DESC");
+                PreparedStatement ptm = null;
+                switch(mod){
+                    case "add":
+                        ptm = con.prepareStatement("SELECT * FROM achat LEFT JOIN client ON achat.id_cli = client.id_cli WHERE client.id_cli=? ORDER BY id_achat DESC  LIMIT 1");
+                         ptm.setString(1, cliId);
+                        break;
+                    case "edit":
+                        ptm = con.prepareStatement("SELECT * FROM achat LEFT JOIN client ON achat.id_cli = client.id_cli WHERE achat.id_achat=?");
+                        ptm.setString(1, achatIdd);
+                        break;
+                }
+                //PreparedStatement ptm = con.prepareStatement("SELECT * FROM achat LEFT JOIN client ON achat.id_cli = client.id_cli WHERE client.id_cli=? ORDER BY id_achat DESC");
+                ResultSet rss = ptm.executeQuery();
+                String name = "";
+                String lastname = "";
+                String date = "";
+                while (rss.next()) {
+                    //int id = rss.getInt("id");
+                    //String prx = rss.getString("prix");
+                    name = rss.getString("nom_cli");
+                      //lastname.add("'"+rss.getString("nom_prod")+"'");
+                    lastname = rss.getString("prenom_cli");
+                    date = rss.getString("date");
+                }
+                
+                request.setAttribute("name", name);
+                request.setAttribute("lastname", lastname);
+                request.setAttribute("date", date);
+                ptm.close();
+                con.close();
+            } catch (SQLException e) {
+                System.out.print(e);
+            }
+    }else{
+        
+        response.sendRedirect("achat.jsp");
+    }
+    /*
+    String cliId = "";
+    if(request.getAttribute("cliId")!= null){
+        cliId = request.getAttribute("cliId").toString();
+        String cliName = (String) request.setAttribute("d", prx);
+
+    }else{
+        response.sendRedirect("index.jsp");
+    }*/
+    NumberFormat numberFormat = NumberFormat.getInstance();
+%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="NEED/allneed.jsp"/>
+        <title>facture</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/style_bar.css">
+        <jsp:include page="NEED/svg.jsp"/>
+        <style>
+            i.fa{
+            /*position: absolute; 
+            color: linear-gradient(rgba(0, 0, 0, .0), transparent);
+            font-size: 100px;
+            opacity: 0.2;
+            padding-left: 80px;
+            padding-top: -10px; 
+            margin-top: -70px;*/
+            }
+            .col{
+                /*width: 300px;
+                height: 150px;
+                /*margin: 5px;* /
+                margin: 5px;
+                margin-bottom: 15px;
+                border-radius: 4px;*/
+                border-radius: 5px;
+            }
+            
+            h2{
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                text-align: center;
+            }
+            table{
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            td, th{
+                border: 2px solid #444;
+                padding: 8px;
+                text-align: left;
+            }
+            .my-table{
+                text-align: right;
+            }
+            #sign{
+                padding-top: 25px;
+                text-align: right;
+                float: top;
+                border-left: none;
+            }
+            #allcomand{
+                /*width: 200px;*/
+                background-color: lightblue;
+                /*height: 300px;*/
+                height: 400px;
+                /*width: 40px;*/
+                overflow-y: auto;
+            }
+            #filter{
+                background-color: #D6D6FF;
+            }
+            /*
+            @media print {
+                table {
+                    border-collapse: collapse;
+                    border: 1px solid black;
+                }
+            }*/
+        </style>
+        <style type="text/css" media="print">
+            
+            /*Hide every other element*/
+            body * {
+                visibility: hidden;
+            }
+            /*Then displaying print cointaaainer elements*/
+            .print-container, .print-container * {
+                visibility: visible;
+            }
+            /*Adjusting postion*/
+            .print-container{
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+            
+            #allcomand{
+                /*width: 200px;*/
+                background-color: lightblue;
+                /*height: 300px;*/
+                height: 95%;
+                /*width: 40px;*/
+                overflow-y: auto;
+            }
+        </style>
+        
+        <link rel="stylesheet" href="css/style_client.css">
+        
+                <link rel="stylesheet" type="text/css" href="FRA/dt/jquery.dataTables.min.css">
+<!--                <script type="text/javascript" language="javascript" src="FRA/dt/jquery3.6.2.js"></script>
+                <script type="text/javascript" language="javascript" src="FRA/dt/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" language="javascript" src="FRA/dt/jquery.dataTables.js"></script>  -->
+    </head>
+    <body>
+        <%@ include file="modal/Add_achat_mod.jsp"%>
+        
+        <jsp:include page="mainside.jsp"/>
+        
+        
+        <!--<main>-->
+                <div class="d-flex flex-column flex-shrink-0 p-1 bg-light" style="width: 76.5%;">
+                    <center><h2>Facture N°<span><%= cliId %></span></h2></center>
+                    <div class="container container-sm justify-content-center">
+                        <div class="row justify-content-left">
+                            <div class="col-md-1">
+                                <h5></h5>
+                            </div>
+                            
+                            <div class="col-md-10">
+                                <!--<h5>Nom : <span>RAKOTO</span> <span>Nirina rabe</span></h5>-->
+                                <h5>Nom : <span><%= request.getAttribute("name") %></span> <span><%= request.getAttribute("lastname") %></span></h5>
+                            </div>
+                        </div>
+                        <!-- 1 -->
+                   <div class="row">
+                       <div class="col-md-1 bg-light">
+                                
+                        </div>
+                       <div class="col-md-10 bg-light">
+                                
+                            
+                        <div class="row" hidden>
+                            <div class="col">
+                               gauche
+                            </div>
+                            <div class="col">
+                                milieu
+                                <input type="number" class="form-control form-control-sm " id="cliids" name="cliids" value="<%= cliId %>" hidden>
+                                <%  
+                                    try {
+                                            Connection conn = db.getConnection();
+                                             //PreparedStatement pst = con.prepareStatement("SELECT * FROM client");
+                                             //PreparedStatement pstm = conn.prepareStatement("SELECT * FROM achat ORDER BY id_achat DESC LIMIT 1");
+                                             PreparedStatement pstm = null;
+                                             switch(mod){
+                                                 case "add":
+                                                     pstm = conn.prepareStatement("SELECT * FROM achat ORDER BY id_achat DESC LIMIT 1");
+                                                     break;
+                                                 case "edit":
+                                                     pstm = conn.prepareStatement("SELECT * FROM achat WHERE id_achat=?");
+                                                     pstm.setString(1, achatIdd);
+                                                     break;
+                                             }
+                                            ResultSet rss = pstm.executeQuery();
+                                            int achtidd = 0;
+                                            int mttal = 0;
+                                            while (rss.next()) {
+                                            achtidd = rss.getInt("id_achat");
+                                            mttal = rss.getInt("montant_total");
+                                            int idachats = rss.getInt("id_achat");
+                                            //int montanttot = rss.getInt("montant_total");
+                                                %> 
+                                                <input type="number" class="form-control form-control-sm " id="idac" name="idac" value="<%=idachats%>" hidden>
+                                                   <input type="number" class="form-control form-control-sm " id="montattoat" name="montattoat" value="<%=rss.getInt("montant_total")%>"  hidden>
+                                                <%
+                                                        }
+                                            request.setAttribute("achtidd", achtidd);
+                                            request.setAttribute("mttal", mttal);
+                                                    } catch (SQLException e) {
+                                                        System.out.print(e);
+                                                    }
+                                                %>
+                            </div>
+                            <div class="col">
+                                droit
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        
+                        
+                        <!-- 4 -->
+                        
+                        <!-- 5 -->
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <!-- gauche -->
+                                                <div class="input-group mb-2">
+                                                    <span class="input-group-text">Filter : </span>
+                                                    <select class="form-select form-select-sm" id="filter" name="filter">
+                                                        <option value="euro">Select the unité</option>
+                                                        <option value="MGA">MGA</option>
+                                                        <option value="AR">AR</option>
+                                                        <option value="FMG">FMG</option>
+                                                      </select>
+                                                </div>
+                                        
+                            </div>
+                            <div class="col col-sm-3">
+                                <!-- milieu -->
+                                <!--Column milieu-->
+                            </div>
+                                                
+                            <div class="col">
+                                <!-- droite -->
+                                <!--Column droite-->
+                                <button type="button" class="btn btn-info w-75 mb-2" id="cart">
+                                        <i class="fa fa-print"> </i> Imprimer
+                                    </button>
+                            </div>
+                        </div>
+                     </div>   
+                 </div>
+                        <div class="row">
+                            <div class="col-md-1 bg-light">
+                                
+                            </div>
+                            <div class="col-md-10 bg-white print-container" id="allcomand">
+                                <!--<h2>Facture</h2>
+                                <h5 style="text-align: left; position: absolute;"><div id="txtHint">Nom du client :</div></h5>
+                                <h5 style="text-align: right; position: absolute;"><div id="txtplant">Customer info will be listed here...</div></h5>-->
+                                <table id="content">
+                                    <thead>
+                                        <tr>
+                                            <th>Num client</th>
+                                            <th colspan="5" ><%= cliId %></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="1" >Nom client</th>
+                                            <th colspan="5" ><%= request.getAttribute("name") %> <%= request.getAttribute("lastname") %></th>
+                                        </tr>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Item</th>
+                                            <th id="thprix">Prix</th>
+                                            <th>Quantité</th>
+                                            <th id="thtotal">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbltbody">
+                                        <%
+                                         int i = 1;
+                                         String sid = request.getAttribute("achtidd").toString();
+                                         
+                                            try {
+                                                Connection con = db.getConnection();
+                                                //PreparedStatement pst = con.prepareStatement("SELECT * FROM client");
+                                                //PreparedStatement pst = con.prepareStatement("SELECT * FROM produit LEFT JOIN category ON produit.id_cat = category.id_cat");
+                                                //PreparedStatement pst = con.prepareStatement("SELECT * FROM commande JOIN produit JOIN achat JOIN client WHERE commande.id_prod = produit.id_prod AND commande.id_achat = achat.id_achat AND achat.id_cli = client.id_cli : "SELECT id_achat WHERE FROM";");
+                                                //PreparedStatement pst = con.prepareStatement("SELECT * FROM achat LEFT JOIN client ON achat.id_cli = client.id_cli");
+                                                PreparedStatement pst = con.prepareStatement("SELECT * FROM commande JOIN produit JOIN achat JOIN client WHERE commande.id_prod = produit.id_prod AND commande.id_achat = achat.id_achat AND achat.id_cli = client.id_cli AND commande.id_achat=?");
+                                                pst.setString(1, sid);
+                                                ResultSet rs = pst.executeQuery();
+                                                int price = 0;
+                                                int mount = 0;
+                                                while (rs.next()) {
+                                                    int icom = rs.getInt("id_com");
+                                                    int imont = rs.getInt("montant");
+                                                    price = rs.getInt("prix");
+                                                    mount = rs.getInt("montant");
+                                        %> 
+                                        <tr>
+                                            <!--<td>< %= rs.getString("id_prod")%></td>-->
+                                            <td><%=i%></td>
+                                            <td><%=rs.getString("nom_prod")%></td>
+                                            <td id="priceid<%=i%>"><%= numberFormat.format(price) %></td>
+                                            <td><%= rs.getString("quantite")%></td>
+                                            <td id="totid<%=i%>"><%= numberFormat.format(mount)%></td>
+                                            <!--<td>
+                                                <a href="#vue_< %=rs.getString("id_achat")%>" class="text-info"  data-bs-toggle="modal"><i class="fa fa-eye bi me-3"></i></a>
+                                                <a href="#edit_< %=rs.getString("id_achat")%>" class="text-primary hovered"  data-bs-toggle="modal"><i class="fa fa-edit bi me-2"></i></a>
+                                                <a href="#delete_< %=rs.getString("id_achat")%>" class="text-danger"  data-bs-toggle="modal"><i class="fa fa-trash bi me-2"></i></a>
+                                            </td>-->
+                                        </tr>
+                                        <!--< %@ include file="modal/Edit_delete_achat_mod.jsp"%>-->
+                                        <%
+                                        i++;
+                                                }  
+                                            request.setAttribute("price", price);
+                                            } catch (SQLException e) {
+                                                System.out.print(e);
+                                            }
+                                        %>
+                                    </tbody>
+                                    <tr>
+                                        <th colspan="4" class="my-table">GST (18%)</th>
+                                        <th><%=i%></th>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="my-table">Grand Total</th>
+                                        <th id="grandtot"><%=numberFormat.format(request.getAttribute("mttal"))%></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="my-table">Grand Total Round Fig.</th>
+                                        <th id="grandtotfig"><%=numberFormat.format(request.getAttribute("mttal"))%></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" id="left" style="border-right: none">Date: <%= request.getAttribute("date") %></td>
+                                        <td colspan="5" id="sign">Signature</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-sm-4">
+                                <!-- gauche -->
+                                               
+                                        
+                            </div>
+                            <div class="col col-sm-3">
+                                <!-- milieu -->
+                                <!--Column milieu-->
+                            </div>
+                                                
+                            <div class="col col-sm-4">
+                                <!-- droite -->
+                                <!--Column droite-->
+                                    <div class="input-group mb-2" hidden>
+                                                    <span class="input-group-text">Total : </span>
+                                                    <input type="number" class="form-control form-control-sm " id="Total" name="Total" value="<%=request.getAttribute("mttal")%>" disabled required>
+                                                    <span class="input-group-text">Ar</span>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <jsp:include page="NEED/footer.jsp"/>
+                <script type="text/javascript" language="javascript" src="FRA/dt/jquery3.6.2.js"></script>
+                <script type="text/javascript" language="javascript" src="FRA/dt/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" language="javascript" src="FRA/dt/jquery.dataTables.js"></script> 
+        <script src="FRA/ptw/print.min.js"></script>
+        <link rel="stylesheet" href="FRA/ptw/print.min.css">
+        <script src="FRA/pt/jspdf.umd.min.js"></script>
+        <script>
+               
+               $(document).ready(function() {
+                   var totaldesmontants = "<%=numberFormat.format(request.getAttribute("mttal"))%>";
+                   var price = <%=request.getAttribute("price")%>;
+                   var autoid = <%=i%>;
+                   var autoidlength = parseInt(autoid)-1;
+                   
+                   
+                   $("#filter").change(function(){
+                       var selectvalue = $(this).val();
+                       var achatid = $("#idac").val();
+                       var totall_old = $("#Total").val();
+                       //console.log(< %=numberFormat.format(request.getAttribute("mttal")%>);
+                       //console.log(converter("100000", "fmg"));
+                       //console.log(converter("20000", "euro"));
+                       
+                        //$(this).css("background-color", "#D6D6FF");
+                        //alert(totaldesmontants);
+                        /*
+                        $("#grandtot").html(totaldesmontants+" Ar");
+                        $("#grandtotfig").html(totaldesmontants+" Ar");
+                        for(var ii=1; ii<=autoidlength; ii++){
+                            $("#priceid"+ii).html($("#priceid"+ii).text()+" Ar");
+                        }*/
+                        //euro mga ariary fmg
+                        $.ajax({
+                            type: "post",
+                            url: "./action/factchange.jsp",
+                            data: { montanttotal: price, achatid: achatid, selecval: selectvalue},
+                            success: function(results) {
+                              $("#tbltbody").html(results);
+                              //$("#Total").val(montanttotal);
+                            }
+                          });
+                          
+                        /*if(selectvalue==="euro"){
+                            $("#thprix").html("Prix (Euro)");
+                            $("#thtotal").html("Total (Euro)");
+                            $("#grandtot").html(totaldesmontants+" Euro");
+                            $("#grandtotfig").html(totaldesmontants+" Euro");
+                            
+                            for(var ii=1; ii<=autoidlength; ii++){
+                                //$("#priceid"+ii).replaceWith("<td>"+$("#priceid"+ii).text()+" fmg </td>");
+                                $("#priceid"+ii).replaceWith("<td id='priceid< %=i%>'>"+converter($("#priceid"+ii).text(),"euro")+"</td>");
+                                //$("#priceid"+ii).replaceWith($("#priceid"+ii).text()+" fmg");
+                            }
+                            
+                        }*/
+        
+        
+        /*  var prixht = document.getElementById("prixht");
+                    prixht.innerHTML=montantTotal;
+                    var tva = document.getElementById("tva");
+                    tva.innerHTML= montantTotal*10/100;
+                    var prixttc = document.getElementById("prixttc");
+                    prixttc.innerHTML= montantTotal+montantTotal*10/100; //mt+tva
+                    var montantTTC = document.getElementById("montantTTC");
+                    montantTTC.innerHTML= "Prix Total : "+(montantTotal+montantTotal*10/100)+" Ar";
+         */
+                        if(selectvalue==="MGA"){
+                            $("#thprix").html("Prix (MGA)");
+                            $("#thtotal").html("Total (MGA)");
+                            var cv = converter(totall_old, "MGA");
+                            
+                            $("#grandtot").html(addCommas(totall_old)+" MGA");
+                            $("#grandtotfig").html(addCommas(totall_old)+" MGA");
+                            
+                        } else if(selectvalue==="AR"){
+                            $("#thprix").html("Prix (AR)");
+                            $("#thtotal").html("Total (AR)");
+                            var cv = converter(totall_old, "AR");
+                            
+                            $("#grandtot").html(addCommas(totall_old)+" <b>Ar</b>");
+                            $("#grandtotfig").html(addCommas(totall_old)+" <b>Ar</b>");
+                            
+                        } else if(selectvalue==="FMG"){
+                            $("#thprix").html("Prix (FMG)");
+                            $("#thtotal").html("Total (FMG)");
+                            
+                            var cv = addCommas(converter(totall_old, "FMG"));
+                            $("#grandtot").html(cv+" fmg");
+                            $("#grandtotfig").html(cv+" fmg");
+                            /*
+                            for(var ii=1; ii<=autoidlength; ii++){
+                                //$("#priceid"+ii).replaceWith("<td>"+$("#priceid"+ii).text()+" fmg </td>");
+                                $("#priceid"+ii).replaceWith("<td id='priceid< %=i%>'>"+converter($("#priceid"+ii).text(),"fmg")+"</td>");
+                                //$("#priceid"+ii).replaceWith($("#priceid"+ii).text()+" fmg");
+                            }*/   
+                        } else {
+                            $("#thprix").html("Prix");
+                            $("#thtotal").html("Total");
+                            $("#grandtot").html(totall_old);
+                            $("#grandtotfig").html(totall_old);
+                        }
+                        
+                    });
+                   
+                   
+                   
+                $("#produit").change(function() {
+                    var selectvalueoption = $(this).val();
+                    var quantite = $("#quantite").val();
+                    
+                    if(selectvalueoption!="0"){
+                        $.ajax({
+                           type: "post",
+                           url: "getvalue",
+                           data: { selectValue: selectvalueoption},
+                           success: function(response) {
+                                var prx = $("#prix").val(response);
+
+                                var sm = parseInt(quantite)*parseInt(response);
+                                   if(quantite != ""){
+                                       $("#montantid").val(sm);
+                                   } else{
+                                       $("#montantid").val("0");
+                                   }
+                           }
+                         });
+                    } else{
+                            $("#prix").val("0");
+                    }
+                    /*
+                    setTimeout(function(){ 
+                         var quantite = $("#quantite").val();
+                         var prix = $("#prix").val();
+                         var somme = parseInt(quantite)*parseInt(prix);
+                                if(quantite != ""){
+                                    $("#montantid").val(somme);
+                                } else{
+                                    $("#montantid").val("0");
+                                }
+                    }, 1000);
+                    */
+                 });
+                
+                $("#quantite").on("keyup", function() {
+                    var qtevalue = $(this).val();
+                    var prixval = $("#prix").val();
+                    var sum = parseInt(qtevalue)*parseInt(prixval);
+                    
+                    if(qtevalue != ""){
+                        $("#montantid").val(sum);
+                    } else{
+                        $("#montantid").val("0");
+                    }
+                    
+                    
+                 });
+                 
+                $("#cart").on("click", function() {
+                    
+                    //Totalalert("produit id ="+produitval+" prix ="+prixval+" qte ="+qte+" montant "+montant+" date = "+date+" id cli= "+cliids+" montanttot = "+montanttotal);
+                    //printDiv();
+                    window.print();
+                    //printTab();
+                    //generatePDF();
+                    
+                    //tt.value = ;
+                    
+                 });
+                 
+                 
+                /*
+                $("#chbx").change(function() {
+                    if(this.checked) {
+                        $("#filterhide").removeAttr("disabled");
+                    } else {
+                        $("#filterhide").attr("disabled", "disabled");
+                    }
+                });*/
+                $("#chbx").change(function() {
+                    
+                    if(this.checked) {
+                        //le checkbox est selectionner
+                        $("#filterhide").removeAttr("hidden");
+                        $("#recherchehide").removeAttr("hidden");
+                        $("#clienthide").attr("hidden", "disabled");
+                        $("#clientrchhide").removeAttr("hidden");
+                        /*$("#client_id").val("");*/
+                    } else {
+                        $("#filterhide").attr("hidden", "disabled");
+                        $("#recherchehide").attr("hidden", "disabled");
+                        $("#clienthide").removeAttr("hidden");
+                        $("#clientrchhide").attr("hidden", "disabled");
+                        /*$("#rch").val("");
+                        $("#clien_id_srch").val("");*/
+                    }
+                });
+                 $("#rch").on("keyup", function() {
+                    var searchTerm = $(this).val();
+                    var search = document.getElementById("filtersearch");
+                    //var searchT = document.getElementById("rch");
+                    var search_dt = search.value;
+                    //var searchTerm = searchT.value;
+                    //var ser = $("#wheresearch").val();
+                    $.ajax({
+                      type: "GET",
+                      url: "search_com",
+                      data: { searchTerm: searchTerm, search_dt: search_dt },
+                      success: function(results) {
+                        $("#client_id_srch").html(results);
+                      }
+                    });
+                  });
+            } );
+            
+            function deleteclick(idcom,montantco){
+                     
+                    var achatid = $("#idac").val();//mbola tsiss
+                    var produitval = $("#produit").val();
+                    var prixval = $("#prix").val();
+                    var qte = $("#quantite").val();
+                    var montant = $("#montantid").val();
+                    var date = $("#dat").val();
+                    var cliids = $("#cliids").val();
+                    var mont = $("#montattoat").val();
+                    var montd = $("#Total").val();
+                    //var montanttotal = parseInt(mont)-parseInt(montant);
+                    var ul = $("#list_regenerate").val();
+                    var idcommande = parseInt(idcom);
+                    var montantcom = parseInt(montantco);
+                    //var totalofmontant = parseInt(mont)-parseInt(parseInt(montantcom));
+                    var totalofmontant = parseInt(montd)-parseInt(montantco);
+                    //Totalalert("produit id ="+produitval+" prix ="+prixval+" qte ="+qte+" montant "+montant+" date = "+date+" id cli= "+cliids+" montanttot = "+montanttotal);
+                    //alert("commande id ="+idcommande+" prix ="+prixval+" qte ="+qte+" montant "+montant+" date = "+date+" id cli= "+cliids+" montanttot = "+totalofmontant);
+                    
+                    $.ajax({
+                      type: "post",
+                      url: "./action/servletdeletecom.jsp",
+                      data: { achatid: achatid, prodid: produitval, qte: qte, montant: montant, date: date, idcli: cliids, montanttotal: totalofmontant, idcomm: idcommande},
+                      success: function(resul) {
+                        $("#list_regenerate").html(resul);
+                        $("#Total").val(totalofmontant);
+                      }
+                    });
+                    
+                 }
+                 
+                 function addCommas(num) {
+                    var str = num.toString();
+                    var result = '';
+                    for (var i = str.length - 1, j = 1; i >= 0; i--, j++) {
+                      result = str.charAt(i) + result;
+                      if (j % 3 === 0 && i !== 0) {
+                        result = '.' + result;
+                      }
+                    }
+                    return result;
+                  }
+                  
+                  function converter(number, types) {
+                   var n = parseInt(number);
+                   var result = '';
+                    if(types === "FMG"){
+                        result = (5*n)/1;
+                    } else if(types === "AR" || types === "FMG"){
+                        result = (1*n)/5;
+                    }
+                    return result;
+                }
+                
+                function printDiv() {
+                    var content = document.getElementById("content").outerHTML;
+                    var printWindow = window.open('', '', 'height=600,width=800');
+                    printWindow.document.write('<html><head><title>Impression</title></head><body>');
+                    //printWindow.document.write('<table>');
+                    printWindow.document.write(content);
+                    //printWindow.document.write('</table>');
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+                    printWindow.focus();
+                    printWindow.print();
+                    printWindow.close();
+                  }
+                  
+                  function printTab() {
+                    var content = document.getElementById("content").innerHTML;
+                    printJS({ printable: content, type: 'html', documentTitle: 'Impression' });
+                  }
+                  
+                  function generatePDF() {
+                    // Récupère le contenu HTML du tableau
+                    const tableHtml = document.getElementById('content').outerHTML;
+
+                    // Crée un nouveau document PDF
+                    const doc = new jsPDF();
+
+                    // Ajoute le contenu HTML du tableau au document PDF
+                    doc.autoTable({ html: tableHtml });
+
+                    // Enregistre le document PDF
+                    doc.save('tableau.pdf');
+                  }
+        </script>
+    </body>
+</html>

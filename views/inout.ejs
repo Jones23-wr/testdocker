@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/imports/all/font-awesome.min.css">
+    <link rel="stylesheet" href="/imports/all/bootstrap.min.css">
+    <script src="/imports/all/bootstrap.bundle.min.js"></script>
+    <script src="/imports/table/jquery3.6.2.js"></script>
+    <!-- <style>
+        .vh {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),url(image/img.jpg);
+            background-size: center;
+            background-position: center;
+        }
+    </style> -->
+    <title>bons</title>
+</head>
+<body>
+    
+		<%- include('./partials/navbar')%>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col col-3">
+                    
+                    
+                </div>
+                <div class="col col-3"></div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-3"></div>
+                <div class="col col-sm-6 align-content-center text-center"> <h3>LISTE DES BONS</h3></div>
+                <div class="col col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col col-1"></div>
+                <div class="col col-10">
+                    <div class="card w-100">
+                        <div class="card-header">
+        
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Bon entrer</button>
+                                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Bon sortir</button>
+                                </div>
+                              </nav>
+        
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- <div class="col col-sm-3">
+                                    <a href="#" class="btn btn-success btn-sm" title="Add New Log"  data-bs-toggle="modal" data-bs-target="#addlog">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+                                    </a> 
+                                </div> -->
+                                <div class="col-sm-6 col-sm-6">
+                                    <% if(message.length > 0) { %>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                                            <%= message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    <% }%>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <table class="table">
+                                            <div class="col col-sm-6">
+                                                <form action="/bnenter/add" method="post">
+                                                    <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" id="idbne">
+                                                    <div class="row">
+                                                        <div class="col col-sm-6">
+                                                            <div class="mb-3">
+                                                                <label for="superficie" class="form-label">Numero : </label>
+                                                                    <div class="col col-sm-5 w-100">
+                                                                        <input type="text" name="numerobne" class="form-control" id="numerobne" placeholder="@numero" required>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-sm-6">
+                                                            <div class="mb-3">
+                                                                <label for="superficie" class="form-label">Date : </label>
+                                                                <div class="row">
+                                                                    <div class="col col-sm-9">
+                                                                        <input type="date" name="datebne" class="form-control" id="datebne" placeholder="@date" required>
+                                                                    </div>
+                                                                    <div class="col col-sm-3">
+                                                                        <button type="submit" name="submit_cite"  value="ajouter_cite" class="btn btn-success">Ajouter</button>
+                                                                        <!-- <input type="submit" name="submit_cite" class="btn btn-sm btn-success" value="ajouter_c"> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </form>
+                                            </div>
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Numero bon</th>
+                                                    <th>Date d'entrer</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  id="myTable">
+                                                <% for (i=0; i < bneresultat.length; i++) { %>
+                                                <tr>
+                                                    <td><%= i+1 %></td>
+                                                    <td><%= bneresultat[i].num_bne %></td>
+                                                    <!-- <td>< %= bneresultat[i].date_bne.toISOString().slice(0,10) %></td> -->
+                                                    <!-- <td>< %= bneresultat[i].date_bne.toLocaleDateString('fr-FR') %></td> -->
+                                                    <td><%= bneresultat[i].date_bne.toLocaleDateString('fr-FR') %></td>
+                                                    <td>
+                                                        <a href="#edite_<%= bneresultat[i].bne_id %>" class="btn btn-primary btn-sm mr-2"  data-bs-toggle="modal"><i class='fa fa-edit'></i>Modifier</a>
+                                                        <a href="#deletee_<%= bneresultat[i].bne_id %>" class="btn btn-danger btn-sm ml-2"  data-bs-toggle="modal"><i class='fa fa-trash'></i> Supprimer</a>
+                                                    </td>
+                                                </tr>
+                                                     <%- include('./layouts/in_edit')%>
+                                                <% } %>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col col-sm-4">
+                                                    <form action="/bnsortir/add" method="post">
+                                                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" id="idbns">
+                                                        <div class="mb-3">
+                                                            <label for="superficie" class="form-label">Numero bns : </label>
+                                                            <input type="number" name="numerobns" class="form-control" id="numerobns" placeholder="@numero bns" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="adresse" class="form-label">Nom client : </label>
+                                                            <!--<input type="text" name="idclient" class="form-control" id="idclient" placeholder="@Nom client">-->
+                                                            <select name="idclient" id="cliid" class="form-select">
+                                                                <% for (i=0; i < cbxresultat.length; i++) { %>
+                                                                    <option value="<%=cbxresultat[i].id_cli%>" >
+                                                                        <%= cbxresultat[i].nom_cli +' '+ cbxresultat[i].prenom_cli %>
+                                                                    </option>
+                                                                <% } %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="cite" class="form-label">Date : </label>
+                                                            <input type="date" name="datebns" class="form-control" id="datebns" placeholder="@date" required>
+                                                        </div>
+                                                        <div class="">
+                                                            <button type="submit" name="submit_terrain"  value="ajouter_terrain" class="btn btn-success">Ajouter</button>
+                                                            <!-- <input type="submit" name="submit_terrain" class="btn btn-sm btn-success"> -->
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col col-sm-8">
+                                                    <div class="table-responsive w-100">
+                                                        <table class="table table-striped table-bordered" id="sample_data">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Numero bon</th>
+                                                                    <th>Nom client</th>
+                                                                    <th>Prenom client</th>
+                                                                    <th>Date bns</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="myTa">
+                                                                <% for (i=0; i < bnsresultat.length; i++) { %>
+                                                                <tr>
+                                                                    <td><%= i+1 %></td>
+                                                                    <td><%= bnsresultat[i].num_bns %></td>
+                                                                    <td><%= bnsresultat[i].nom_cli %></td>
+                                                                    <td><%= bnsresultat[i].prenom_cli %></td>
+                                                                    <td><%= bnsresultat[i].date_bns.toLocaleDateString('fr-FR') %></td>
+                                                                    <td style="display: inline-table;">
+                                                                        <a href="#edits_<%= bnsresultat[i].bns_id %>" class="btn btn-primary btn-sm mr-2"  data-bs-toggle="modal"><i class='fa fa-edit'></i></a>
+                                                                        <a href="#deletes_<%= bnsresultat[i].bns_id %>" class="btn btn-danger btn-sm ml-2"  data-bs-toggle="modal"><i class='fa fa-trash'></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                    <%- include('./layouts/out_edit')%>
+                                                                <% } %>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-1"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+    
+</body>
+
+<script src="/imports/all/jquery.js"></script>
+<script src="/imports/js/script.js"></script>
+
+<script type="text/javascript">
+     $(document).ready(function () {
+        $("#mySearch").on("keyup", function () { 
+        var value = $(this).val().toLowerCase();
+
+        $("#myTa tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+        });
+    }); 
+   
+	function remplirbne(id, numbne, datbne) {
+		document.getElementById('idbne').value = id;
+		document.getElementById('numerobne').value = nom;
+		document.getElementById('datebne').value = datbne;
+	}
+
+    function remplirbns(id, nom, prenom, tel, adrs) {
+		document.getElementById('idbns').value = id;
+		document.getElementById('numerobns').value = nom;
+		document.getElementById('cliid').value = prenom;
+		document.getElementById('datebns').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+    
+    function remplirDonners(id, nom, prenom, tel, adrs) {
+		document.getElementById('id').value = id;
+		document.getElementById('nom').value = nom;
+		document.getElementById('prenom').value = prenom;
+		document.getElementById('tel').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+
+	function supprimerbne(id) {
+		let pointfinal = '/bnenter/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+
+	}
+    
+    function supprimerbns(id) {
+		let pointfinal = '/bnsortir/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+
+	}
+</script>
+
+</html>

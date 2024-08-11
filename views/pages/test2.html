@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="NEED/allneed.jsp"/>
+        <title>Acceuil</title>
+        <link rel="stylesheet" href="css/style_bar.css">
+        <jsp:include page="NEED/svg.jsp"/>
+        <style>
+            i.fa{
+            /*position: absolute; 
+            color: linear-gradient(rgba(0, 0, 0, .0), transparent);
+            font-size: 100px;
+            opacity: 0.2;
+            padding-left: 80px;
+            padding-top: -10px; 
+            margin-top: -70px;*/
+            }
+            .col{
+                width: 300px;
+                height: 150px;
+                /*margin: 5px;*/
+                margin: 5px;
+                margin-bottom: 15px;
+                border-radius: 4px;
+                
+            }
+        </style>
+        <link rel="stylesheet" href="css/style_home.css">
+    </head>
+    <body>
+        
+        <jsp:include page="mainside.jsp"/>
+        
+        <!--<main>-->
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 76.8;">
+                    <!--code in the right side-->
+
+                    <center><h1>Acceuil</h1></center>
+                    <div class="container container-md p-4 my-4 text-center">
+                        <div class="row">
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3><%=rowprod%></h3><br> <h4>Tous les instrument</h4>
+                                        <i class='fa fa-music'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3><%=rowcli%></h3><br> <h4>Tous les client</h4>
+                                        <i class='fa fa-user'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3><%=rowcom%></h3><br> <h4>Tous les commande</h4>
+                                        <i class='fa fa-cart-plus'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                        <!--<span class='glyphicon glyphicon-triangle-right'></span> <a href='items.php'>Voir Details</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3><%=rowachat%></h3><br> <h4>Tous les achats</h4>
+                                        <i class='fa fa-glass'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3><%=rowcli%></h3><br> <h4>Tous les achats</h4>
+                                        <i class='fa fa-glass'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col bg-danger">
+                                <div class="row">
+                                    <div class='mp'><h3>3</h3><br> <h4>Tous les produit</h4>
+                                        <i class='fa fa-glass'></i> <hr>
+                                        <a href="#" class="nav-link text-white">
+                                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#arrow-r"/></svg>
+                                            Voir Details
+                                        </a>
+                                        <!--<span class='glyphicon glyphicon-triangle-right'></span> <a href='items.php'>Voir Details</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <jsp:include page="NEED/footer.jsp"/>
+    </body>
+</html>

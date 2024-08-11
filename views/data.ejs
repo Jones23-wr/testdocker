@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Acceuil</title>
+	<style type="text/css">
+		label {
+			width: 100px;
+			margin-bottom: 3px;
+		}
+		input {
+			width: 100px;
+			margin-bottom: 3px;
+		}
+	</style>
+</head>
+<body>
+	<div style="width: 50%; margin: auto;">
+		<%- include('./component/header')%>
+		<section>
+			<form action="/data/add" method="POST">
+				<input type="hidden" name="id" id="id">
+				<label>Nom client : </label>
+				<input type="text" name="nom" id="nom"> <br>
+				<label>Prenom client : </label>
+				<input type="text" name="prenom" id="prenom"> <br>
+				<label>Tel : </label>
+				<input type="number" name="telephone" id="tel"> <br>
+				<label>Adresse</label>
+				<textarea name="Description" id="adresse"></textarea>
+				<br>
+				<input type="submit" value="enregistrer">
+			</form>
+		</section>
+		<p><hr></p>
+		<section>
+			<h2>Listes des donnés</h2>
+			<ul>
+				<% for (i=0; i < resultat.length; i++) { %>
+					<li><%= resultat[i].nom_cli +' => '+ resultat[i].prenom_cli+' => '+ resultat[i].tel_cli+' => '+ resultat[i].adresse %></li> <input type="button" value="Modifier" onclick="remplirDonners('<%=resultat[i].id_cli%>', '<%=resultat[i].nom_cli%>', '<%=resultat[i].prenom_cli%>', '<%=resultat[i].tel_cli%>', '<%=resultat[i].adresse%>')"> <input type="button" value="Supprimer" onclick="supprimer('<%=resultat[i].id_cli%>')">
+				<% } %>
+			</ul>
+		</section>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	function remplirDonners(id, nom, prenom, tel, adrs) {
+		document.getElementById('id').value = id;
+		document.getElementById('nom').value = nom;
+		document.getElementById('prenom').value = prenom;
+		document.getElementById('tel').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+
+	function supprimer(id) {
+		let pointfinal = '/data/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+
+	}
+</script>
+
+</html>

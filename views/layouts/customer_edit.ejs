@@ -1,0 +1,82 @@
+<div class="modal" id="edit_<%= resultat[i].id_cli %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/clients/add" method="POST">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Ajout de client</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!--<table border="">-->
+                    <div class="container-fluid">
+
+                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" value="<%= resultat[i].id_cli %>">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Nom : </span>
+                            <input type="text" class="form-control" name="nom" placeholder="Entrer votre Nom" value="<%= resultat[i].nom_cli %>" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Prenom : </span>
+                            <input type="text" class="form-control" name="prenom" placeholder="Entrer votre Prenom" value="<%= resultat[i].prenom_cli %>" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Num tel : </span>
+                            <input type="number" class="form-control" name="telephone" placeholder="Entrer votre num tel" value="<%= resultat[i].tel_cli %>" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Adresse : </span>
+                            <input type="text" class="form-control" name="Description" placeholder="Entrer votre Adresse" value="<%= resultat[i].adresse %>" required>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" value="modify"><i
+                        class="fa fa-edit bi me-2"></i>Modifier</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="delete_<%= resultat[i].id_cli %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/clients/add" method="POST">
+                <div class="modal-header">
+                    <h5>Suppression de client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="id_cli_delete"
+                                value="<%= resultat[i].id_cli %>" hidden>
+                            <h6 class="text-center">êtes-vous sur de vouloir supprimer cet client numero
+                                <%= resultat[i].id_cli +' de Nom '+ resultat[i].nom_cli+' '+ resultat[i].prenom_cli %>?</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" value="delete" onclick="supprimer('<%=resultat[i].id_cli%>')" ><i
+                            class="fa fa-trash bi me-2"></i>Oui</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Non</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

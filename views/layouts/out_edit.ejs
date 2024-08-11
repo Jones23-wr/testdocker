@@ -1,0 +1,84 @@
+<div class="modal" id="edits_<%= bnsresultat[i].bns_id %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/bnsortir/add" method="POST">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Ajout de bon de sortir</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!--<table border="">-->
+                    <div class="container-fluid">
+
+                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" value="<%= bnsresultat[i].bns_id %>">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Numero bns : </span>
+                            <input type="number" name="numerobns" class="form-control" id="numerobns" placeholder="@numero bns" value="<%= bnsresultat[i].num_bns %>">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">nom client : </span>
+                            <select name="idclient" id="cliid" class="form-select">
+                                <% for (ii=0; ii < cbxresultat.length; ii++) { %>
+                                    <option value="<%=cbxresultat[ii].id_cli%>" >
+                                        <%= cbxresultat[ii].nom_cli +' '+ cbxresultat[ii].prenom_cli %>
+                                    </option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Date :</span>
+                            <% const datevalue_out = bnsresultat[i].date_bns.toISOString().slice(0,10) %>
+                            <!-- <input type="date" name="datebns" class="form-control" id="datebns" placeholder="@date" value="< %= bnsresultat[i].date_bns.toLocaleDateString('fr-FR') %>"> -->
+                            <input type="date" name="datebns" class="form-control" id="datebns" placeholder="@date" value="<%=datevalue_out%>">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" value="modify"><i
+                        class="fa fa-edit bi me-2"></i>Modifier</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="deletes_<%= bnsresultat[i].bns_id %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/produits/adds" method="POST">
+                <div class="modal-header">
+                    <h5>Suppression de produit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="id_prod_delete"
+                                value="<%= bnsresultat[i].num_bns %>" hidden>
+                            <h6 class="text-center">êtes-vous sur de vouloir supprimer cet bon numero
+                                <%= bnsresultat[i].num_bns%> de Date <%= bnsresultat[i].date_bns %> ?</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" value="delete" onclick="supprimerbns('<%=bnsresultat[i].bns_id%>')" ><i
+                            class="fa fa-trash bi me-2"></i>Oui</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Non</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

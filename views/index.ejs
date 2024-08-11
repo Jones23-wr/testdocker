@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>accueil</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="/imports/all/bootstrap.min.css">
+    <script src="/imports/all/jquery.slim.min.js"></script>
+    <script src="/imports/all/popper.min.js"></script>
+    <script src="/imports/all/bootstrap.min.js"></script>
+
+    <style>
+        .carousel-item {
+            height: 100vh;
+            min-height: 300px;
+            background: no-repeat center center scroll;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .carousel-caption {
+            bottom: 270px;
+        }
+            
+
+        .carousel-caption h5 {
+            font-size: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 25px;
+            color: #d0d0d0;
+        }
+
+        .carousel-caption p {
+            width: 75%;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.9;
+        }
+
+        .navbar-light .navbar-brand {
+            color: #fff;
+            font-size: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
+            color: #fff;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-toggler {
+            background: #fff;
+        }
+
+        .navbar-nav {
+            text-align: center;
+        }
+
+        .nav-link {
+            padding: .2rem 1rem;
+        }
+
+        .nav-link.active,.nav-link:focus{
+            color: #fff;
+        }
+
+        .navbar-toggler {
+            padding: 1px 5px;
+            font-size: 18px;
+            line-height: 0.3;
+        }
+
+        .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+            background: gray;
+            color: #fff;
+        }
+            
+        img {
+            width: 100%;
+            height: 100vh;
+            /*background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),url(image/img.jpg);*/
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75));
+            background-size: center;
+            background-position: center;
+            filter: blur(4px);
+            /* filter: grayscale(60%); */
+            /* filter: contrast(50%); */
+            /* filter: saturate(50%); */
+            filter: brightness(30%);
+        }
+        a span {
+            color:gray
+        }
+
+        
+
+    </style>
+</head>
+<!-- blur()
+contrast()
+drop-shadow()
+grayscale()
+hue-rotate()
+invert()
+opacity()
+saturate()
+sepia() -->
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">G<span>Stock</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="float: right; margin-left: 50%;">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clients">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produits">Produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bons">Bons Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="/image/1.jpg" alt="First slide">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>
+                        LAZAN'I BETSILEO
+                    </h5>
+                    <p>
+                        <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi
+                        quas vero --></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

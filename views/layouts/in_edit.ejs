@@ -1,0 +1,75 @@
+<div class="modal" id="edite_<%= bneresultat[i].bne_id %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/bnenter/add" method="POST">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Ajout de client</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!--<table border="">-->
+                    <div class="container-fluid">
+
+                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" id="idbne" value="<%= bneresultat[i].bne_id %>">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Numero bon  : </span>
+                            <input type="text" name="numerobne" class="form-control" id="numerobne" placeholder="@numero" value="<%= bneresultat[i].num_bne %>">
+                        </div>
+                        <div class="input-group mb-2">
+                            <% const datevalue_in = bneresultat[i].date_bne.toISOString().slice(0,10) %>
+                            <span class="input-group-text">Date : </span>
+                            <input type="date" name="datebne" class="form-control" id="datebne" placeholder="@date" value="<%=datevalue_in%>">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" value="modify"><i
+                        class="fa fa-edit bi me-2"></i>Modifier</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="deletee_<%= bneresultat[i].bne_id %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/produits/add" method="POST">
+                <div class="modal-header">
+                    <h5>Suppression de produit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="id_prod_delete"
+                                value="<%= bneresultat[i].bne_id %>" hidden>
+                            <h6 class="text-center">êtes-vous sur de vouloir supprimer cet client numero
+                                <%= bneresultat[i].bne_id +' de date '+ bneresultat[i].date_bne %>?</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" value="delete" onclick="supprimerbne('<%=bneresultat[i].bne_id%>')" ><i
+                            class="fa fa-trash bi me-2"></i>Oui</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Non</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

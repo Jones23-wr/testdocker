@@ -1,0 +1,48 @@
+<div class="modal" id="addcli">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/produits/add" method="POST">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Ajout de client</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!--<table border="">-->
+                    <div class="container-fluid">
+
+                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Nom : </span>
+                            <input type="text" class="form-control" name="nom" placeholder="Entrer le Nom du vin" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Catégorie : </span>
+                            <input type="text" class="form-control" name="categorie" placeholder="Entrer le categorie" required>
+                        </div>
+                        <div class="input-group mb-2" hidden>
+                            <span class="input-group-text">Quantité : </span>
+                            <input type="number" class="form-control" name="quantite" placeholder="Entrer le quantité" value="0" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Prix : </span>
+                            <input type="number" class="form-control" name="prix" placeholder="Entrer le prix" required>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Ajouter</button>
+                    <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/imports/all/font-awesome.min.css">
+    <link rel="stylesheet" href="/imports/all/bootstrap.min.css">
+    <script src="/imports/all/bootstrap.bundle.min.js"></script>
+   
+    
+    <title>customers</title>
+</head>
+<body>
+    
+		<%- include('./partials/navbar')%>
+    <div class="container">
+        
+        <h1 class="mt-4 mb-4 text-center text-primary"><b>
+                
+            </b></h1>
+            <div class="col col-sm-3">
+                <a href="#" class="btn btn-success btn-sm" title="Add New Client"  data-bs-toggle="modal" data-bs-target="#addcli">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+                </a> 
+             </div>
+             <%- include('./layouts/customer_add')%>
+    
+        <span id="message"></span>
+        <% if(message.length > 0) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <%= message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% }%>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-sm-9">Clients Listes</div>
+                    <div class="col col-sm-3">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="sample_data">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Tel</th>
+                                <th>Adresse</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            <% for (i=0; i < resultat.length; i++) { %>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= resultat[i].nom_cli %></td>
+                                <td><%= resultat[i].prenom_cli %></td>
+                                <td><%= resultat[i].tel_cli %></td>
+                                <td><%= resultat[i].adresse %></td>
+                                <td>
+                                    <a href="#edit_<%= resultat[i].id_cli %>" class="btn btn-primary btn-sm mr-2"  data-bs-toggle="modal"><i class='fa fa-edit'></i>Modifier</a>
+                                    <a href="#delete_<%= resultat[i].id_cli %>" class="btn btn-danger btn-sm ml-2"  data-bs-toggle="modal"><i class='fa fa-trash'></i> Supprimer</a>
+                                </td>
+                            </tr>
+                            <%- include('./layouts/customer_edit')%>
+                            <% } %>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="/imports/all/jquery.js"></script>
+<script src="/imports/js/script.js"></script>
+
+<script type="text/javascript">
+   
+	function remplirDonners(id, nom, prenom, tel, adrs) {
+		document.getElementById('id').value = id;
+		document.getElementById('nom').value = nom;
+		document.getElementById('prenom').value = prenom;
+		document.getElementById('tel').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+
+	function supprimer(id) {
+		let pointfinal = '/clients/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+
+	}
+</script>
+
+</html>

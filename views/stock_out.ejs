@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/imports/all/font-awesome.min.css">
+    <link rel="stylesheet" href="/imports/all/bootstrap.min.css">
+    <link rel="stylesheet" href="/imports/sweet/sweetalert2.css">
+    <script src="/imports/all/bootstrap.bundle.min.js"></script>
+
+    <!-- <style>
+        .vh {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),url(image/img.jpg);
+            background-size: center;
+            background-position: center;
+        }
+    </style> -->
+    <style>
+        .col{
+            /*width: 300px;
+            height: 150px;
+            /*margin: 5px;* /
+            margin: 5px;
+            margin-bottom: 15px;
+            border-radius: 4px;*/
+            border-radius: 5px;
+        }
+        
+        h2{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+        table{
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th{
+            border: 2px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+        .my-table{
+            text-align: right;
+        }
+        #sign{
+            padding-top: 25px;
+            text-align: right;
+            float: top;
+        }
+        #allcomand{
+            /*width: 200px;*/
+            background-color: lightblue;
+            /*height: 300px;*/
+            height: 270px;
+            /*width: 40px;*/
+            overflow-y: auto;
+        }
+    </style>
+    <title>stock out</title>
+</head>
+<body>
+    <!-- allresultat, cbxproresultat, idbns, cbxcliresultat, message : req.flash('message') -->
+		<%- include('./partials/navbar')%>
+        <div class="container-fluid">
+            <div class="d-flex flex-column flex-shrink-0 p-1 bg-light" style="width: 100%;">
+                <center><h2>BON DE SORTIR N°<span><%=allresultat[0].num_bns%></span></h2></center>
+                <div class="container container-sm justify-content-center">
+                    <div class="row justify-content-left">
+                        <div class="col-md-1">
+                            <h5></h5>
+                        </div>
+                        <div class="col-md-10">
+                            <% for (i=0; i < allresultat.length; i++) { %>
+                                <!--<h5>Nom : <span>RAKOTO</span> <span>Nirina rabe</span></h5>-->
+                                <h5>Nom : <span><%= allresultat[i].nom_cli%></span> <span><%= cbxcliresultat[i].prenom_cli%></span></h5>
+
+                            <% break; } %>
+                        </div>
+                    </div>
+                    <!-- 1 -->
+               <div class="row">
+                   <div class="col-md-1 bg-light">
+                            
+                    </div>
+                   <div class="col-md-10 bg-light">
+                            
+                        
+                    <div class="row">
+                        <div class="col">
+                          <!--  gauche -->
+                           <input class="form-control" type="hidden" name="id" id="id" readonly>
+                        </div>
+                        <div class="col">
+                           <!--  milieu -->
+                            <input type="hidden" class="form-control form-control-sm " id="cliids" name="cliids" value="" >
+                            <!-- qsdfsqfsdqf -->
+                        </div>
+                        <div class="col">
+                            <!-- droit -->
+                            <!-- <input class="form-control" type="date" name="datesrt" id="datesrt" > -->
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Date : </span>
+                                <!-- < % allresultat.forEach(data => { %>
+                                        <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %=data.date_ent%>" disabled>
+                                < % }) %> -->
+                                <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="<%=btnnsresult[0].date_bns.toLocaleDateString('fr-FR')%>" disabled>
+                            <!-- < % if(allresultat.length > 0) { %>
+                                < % for (iii=0; iii < 1; iii++) { %>
+                                    <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %= allresultat[iii].date_bns.toLocaleDateString('fr-FR');%>" disabled>
+                                < % } %>
+                                <!-- <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="1213" disabled> - ->
+                            < % } else {%>
+                                <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="aucun" disabled>
+                            < % } %> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="row">
+                        <div class="col my-2">
+                            <!--Column gauche-->
+<!--                                <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        Recherche
+                            </button>
+                            <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text">Recherche : </span>
+                                                <input type="text" class="form-control form-control-sm " name="recherche" placeholder="Veuillez entrer le nom" required>
+                                            </div>
+                                        </div>
+                             </div>-->
+<!--col col-sm-3-->
+                            <!--<a href="facture.jsp?ii=< %=cliId%>&dd=< %=dateCom%>&achatii=< %=request.getAttribute("achtidd")%>" class="btn btn-info btn-md  w-100" role="button" aria-disabled="true"><i class="fa fa-bitcoin"> </i>FACTURE</a>-->
+                            <a href="facture?ertszazeeazutyezyttyajhlahzljhqsuypapzeuioupiua=<%=idbns%>" class="btn btn-info btn-md  w-100" role="button" aria-disabled="true"><i class="fa fa-bitcoin"> </i>FACTURE</a>
+                        </div>
+                        <div class="col">
+                            <!--Column milieu-->
+                            
+                        </div>
+                        <div class="col my-2">
+                            <!--Column droite-->
+<!--                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addpro" style="width: 75px;">
+                                    <i class="fa fa-eye"> </i> vue
+                             </button>-->
+                            <a href="/bons" class="btn btn-primary btn-md  w-100" role="button" aria-disabled="true"><!--<i class="fa fa-check-circle"> </i>-->CONFIRMER</a>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="row">
+                        <div class="col">
+                            <!-- gauche -->
+                            <div class="input-group mb-2">
+                                        <span class="input-group-text">Produit :</span>
+                                        <select class="form-select form-select-sm" id="produit" name="produit">
+                                            <option value="0">Veuillez Choisir Un produit...</option>
+                                            <% for (i=0; i < cbxproresultat.length; i++) { %>
+                                                <option value="<%=cbxproresultat[i].id_prod%>" >
+                                                    <%= cbxproresultat[i].nom_prod%>
+                                                </option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- milieu -->
+                            <!--Column milieu-->
+                        </div>
+                        <div class="col">
+                            <!-- droite -->
+                            <div class="input-group mb-2">
+                                                <span class="input-group-text">Prix : </span>
+                                                <input type="number" class="form-control form-control-sm " id="prix" name="prix" placeholder="prix" value="0" disabled required>
+                                                <span class="input-group-text">Ar</span>
+                                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- 4 -->
+                    <div class="row">
+                        <div class="col">
+                            <!-- gauche -->
+                            
+                                    
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- milieu -->
+                            <!--Column milieu-->
+                        </div>
+                        <div class="col">
+                            <!-- droite -->
+                            <!--Column droite-->
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">Quantité en stock: </span>
+                                <!-- < % iq = 0 %>
+                                < % allresultat.forEach(valinyqte => { %>
+                                    < % iq = iq + valinyqte.quantite>
+                                        < !-- <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %=data.date_ent%>" disabled> -- >
+                                < % })%> -->
+                                <input type="number" class="form-control form-control-sm" id="quantite_en_stock" name="quantite_en_stock" min="1" placeholder="Veuillez entrer le quantité en stock" value="0" disabled required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 5 -->
+                    <div class="row">
+                        <div class="col">
+                            <!-- gauche -->
+                            <div class="input-group mb-2">
+                                                <span class="input-group-text">Quantité : </span>
+                                                <input type="number" class="form-control form-control-sm" id="quantite" name="quantite" min="1" placeholder="Veuillez entrer le quantité" required>
+                                            </div>
+                                    
+                        </div>
+                        <div class="col-sm-2">
+                            <!-- milieu -->
+                            <!--Column milieu-->
+                        </div>
+                        <div class="col">
+                            <!-- droite -->
+                            <!--Column droite-->
+                            <div class="input-group mb-2">
+                                                <span class="input-group-text">Montant : </span>
+                                                <input type="number" class="form-control form-control-sm " id="montantid" name="montantid" placeholder="montant" value="0" disabled required>
+                                                <span class="input-group-text">Ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 6 -->
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <!-- gauche -->
+                                            <div class="input-group mb-2">
+                                                <span class="input-group-text">Date : </span>
+                                                <!-- < % allresultat.forEach(data => { %>
+                                                        <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %=data.date_ent%>" disabled>
+                                                < % }) %> -->
+                                                <input class="form-control" type="date" name="datesrt" id="datesrt" max="<%=btnnsresult[0].date_bns.toISOString().slice(0,10)%>">
+                                           <!--  < % if(allresultat.length > 0) { %>
+                                                < % for (iii=0; iii < 1; iii++) { %>
+                                                    <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %= allresultat[iii].date_bns.toLocaleDateString('fr-FR');%>" disabled>
+                                                < % } %>
+                                                < !-- <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="1213" disabled> -- >
+                                            < % } else {%>
+                                                <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="aucun" disabled>
+                                            < % } %> -->
+                                            </div>
+                                            
+                                                
+                                    
+                        </div>
+                        <div class="col col-sm-3">
+                            <!-- milieu -->
+                            <!--Column milieu-->
+                            <input type="hidden" name="id_bns" id="id_bns" value="<%=idbns%>">
+                        </div>
+                                            
+                        <div class="col">
+                            <!-- droite -->
+                            <!--Column droite-->
+                            <button type="button" class="btn btn-success w-75 mb-2" id="cart">
+                                    <i class="fa fa-cart-plus"> </i> Ajouter
+                                </button>
+                        </div>
+                    </div>
+                 </div>   
+             </div>
+                    <div class="row">
+                        <div class="col-md-1 bg-light">
+                            
+                        </div>
+                        <div class="col-md-10 bg-white" id="allcomand">
+                            <!--<h2>Facture</h2>
+                            <h5 style="text-align: left; position: absolute;"><div id="txtHint">Nom du client :</div></h5>
+                            <h5 style="text-align: right; position: absolute;"><div id="txtplant">Customer info will be listed here...</div></h5>-->
+                            
+                            <ol class="list-group list-group-numbered" id="list_regenerate">
+                                <% for (ii=0; ii < allresultat.length; ii++) { %>
+                                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseE<%=allresultat[ii].id_srt%>" aria-expanded="false" aria-controls="collapseE">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold"> <%= allresultat[ii].nom_prod%></div>
+                                        <%= allresultat[ii].cat_prod%>
+                                    </div> 
+                                    <span class="badge bg-success rounded-pill"><%= allresultat[ii].qte_srt %></span>
+                                    
+                                </li>
+                                    <!--<li class="collapse ms-2" id="collapseE< %= i %>">
+                                            <a href="#vue_< %=rs.getString("id_com")%>" id="delete" class="text-info"  data-bs-toggle="modal"><i class="fa fa-eye bi me-3"></i></a>
+                                            <a href="#edit_< %=rs.getString("id_com")%>" class="text-primary hovered"  data-bs-toggle="modal"><i class="fa fa-edit bi me-2"></i></a>
+                                            <a href="#delete_< %=rs.getString("id_com")%>" class="text-danger"  data-bs-toggle="modal"><i class="fa fa-trash bi me-2"></i></a>
+                                    </li>-->
+                                    <li class="collapse ms-2" id="collapseE<%=allresultat[ii].id_srt%>">
+                                            <a href="#" id="delete" class="text-info"><i class="fa fa-eye bi me-3"></i></a>
+                                            <a href="#" class="text-primary hovered"><i class="fa fa-edit bi me-2"></i></a>
+                                            <!-- <a href="#" class="btn btn-danger"  onclick="del('< %=allresultat[ii].id_srt%>');"><i class="fa fa-trash bi me-2"></i></a> -->
+                                            <a href="#" class="text-danger"  onclick="del('<%=allresultat[ii].id_srt%>','<%=allresultat[ii].id_prod%>','<%=allresultat[ii].qte_srt%>','<%=allresultat[ii].montant%>');"><i class="fa fa-trash bi me-2"></i></a>
+                                    </li>
+                                <% } %>
+                                <!--< %@ include file="modal/Edit_delete_commande_mod.jsp"%>-->
+                                <!-- bouclefin -->
+                                
+                            </ol>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-sm-4">
+                            <!-- gauche -->
+                                           
+                                    
+                        </div>
+                        <div class="col col-sm-3">
+                            <!-- milieu -->
+                            <!--Column milieu-->
+                            <!-- <button class="btn btn-dark" id="testwa">CLICK test</button> -->
+                        </div>
+                                            
+                        <div class="col col-sm-4">
+                            <!-- droite -->
+                            <!--Column droite-->
+                                <div class="input-group mb-2">
+                                                <span class="input-group-text">Total : </span>
+                                                <% i = 0 %>
+                                                <% allresultat.forEach(valiny => { %>
+                                                    <% i = i + valiny.montant %>
+                                                        <!-- <input type="text" class="form-control form-control-sm" id="dat" name="dat" placeholder="Veuillez entrer le date" value="< %=data.date_ent%>" disabled> -->
+                                                <% })%>
+                                                <input type="number" class="form-control form-control-sm " id="Total" name="Total" value="<%=i%>" disabled required>
+                                                <!-- <input type="number" class="form-control form-control-sm " id="Total" name="Total" value="0" disabled required> -->
+                                                <span class="input-group-text">Ar</span>
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</body>
+    <script src="/imports/table/jquery3.6.2.js"></script>
+    <script src="/imports/sweet/sweetalert2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#testwa').click(function () { 
+            var id_bns = $("#id_bns").val();//mbola tsiss
+//         var id = $("#id").val();//mbola tsiss
+            var produitval = $("#produit").val();
+            var prixval = $("#prix").val();
+            var qte = $("#quantite").val();
+            var montant = $("#montantid").val();
+            var date = $("#dat").val();
+            var datesrt = $("#datesrt").val();
+            var id = $("#id").val();
+            var mont = $("#montattoat").val();
+            var montd = $("#Total").val();
+            //var montanttotal = parseInt(montant)+parseInt(mont);
+            var montanttotal = parseInt(montd)+parseInt(montant);
+            var ul = $("#list_regenerate").val();
+            console.log('id_bns = '+id_bns+' produitval = '+produitval+' prixval = '+prixval);
+            console.log('qte = '+qte+' montant = '+montant+' date = '+date+' datesrt ='+datesrt);
+            console.log('id = '+id+' mont = '+mont+' montd = '+montd+' montanttotal = '+montanttotal);
+            
+        });
+
+        $("#produit").change(function() {
+         var selectvalueoption = $(this).val();
+         var quantite = $("#quantite").val();
+         console.log(selectvalueoption);
+        //var quantite_en_stock = $("#quantite_en_stock").val();
+         if(selectvalueoption!="0"){
+            
+             $.ajax({
+                type: "post",
+                url: "/getvalueprod",
+                data: { selectValue: selectvalueoption},
+                success: function(response) {
+                    //data.data[count].nom_prod
+                    console.log(response.data);
+                    //console.log('stock = '+response.stock);
+                     var prx = $("#prix").val(response.data);
+                     var qtestock = $("#quantite_en_stock").val(response.qtestock);
+
+                     var sm = parseInt(quantite)*parseInt(response.data);
+                        if(quantite != ""){
+                            $("#montantid").val(sm);
+                        } else{
+                            $("#montantid").val("0");
+                        }
+                }
+              });
+         } else{
+                 $("#prix").val("0");
+                 $("#quantite_en_stock").val("0");
+         }
+      });
+
+      $("#cart").on("click", function() {
+         
+         var id_bns = $("#id_bns").val();//mbola tsiss
+//         var id = $("#id").val();//mbola tsiss
+         var produitval = $("#produit").val();
+         var prixval = $("#prix").val();
+         var qte = $("#quantite").val();
+         var montant = $("#montantid").val();
+         var date = $("#dat").val();
+         var datesrt = $("#datesrt").val();
+         var id = $("#id").val();
+         //var mont = $("#montattoat").val();
+         var montd = $("#Total").val();
+         //var montanttotal = parseInt(montant)+parseInt(mont);
+         var montanttotal = parseInt(montd)+parseInt(montant);
+
+         var qteenstock = $("#quantite_en_stock").val();
+
+        // var valinyto =  parseInt(montd)+parseInt(mont);
+
+         var ul = $("#list_regenerate").val();
+
+         if (parseInt(qteenstock) < parseInt(qte)) {
+            console.log('qte en stock'+parseInt(qteenstock)+' qte ='+parseInt(qte));
+            //alert('le quantité en stock est épuisé');
+            alertsw ('warning','le stock est épuisé');
+         } else {
+            console.log('qte en stock'+parseInt(qteenstock)+' qte ='+parseInt(qte));
+            if (prix == 0 || qte == 0 || datesrt == '' || qteenstock == 0) {
+                //alert('veuillez completer le champs');
+                alertsw ('error','veuillez completez le champs');
+            } else {
+                $.ajax({
+                type: "post",
+                url: "/stocksortir/add",
+                //data: { achatid: achatid, prodid: produitval, qte: qte, montant: montant, date: date, idcli: cliids, montanttotal: montanttotal},
+                data: { id_bns: id_bns, prodid: produitval, qte: qte, montant: montant, date: date, id:id, montanttotal: montanttotal, datesrt: datesrt},
+                success: function(data) {
+                    //$("#list_regenerate").html(results);
+                    //$("#Total").val(montanttotal);
+
+                    var html = '';
+
+                        if(data.data.length > 0)
+                        {
+                            for(var count = 0; count < data.data.length; count++)
+                            {
+                                /* html += `
+                                <tr>
+                                    <td>`+data.data[count].first_name+`</td>
+                                    <td>`+data.data[count].last_name+`</td>
+                                    <td>`+data.data[count].gender+`</td>
+                                    <td>`+data.data[count].age+`</td>
+                                    <td><button type="button" class="btn btn-warning btn-sm edit" data-id="`+data.data[count].id_srt+`">Edit</button>&nbsp;<button type="button" class="btn btn-danger btn-sm delete" data-id="`+data.data[count].id+`">Delete</button></td>
+                                </tr>
+                                `; */
+                                
+                                html += `
+                                
+                                        <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseE`+data.data[count].id_srt+`" aria-expanded="false" aria-controls="collapseE">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold"> `+data.data[count].nom_prod+`</div>
+                                                `+data.data[count].cat_prod+`
+                                            </div> 
+                                            <span class="badge bg-success rounded-pill">`+data.data[count].qte_srt+`</span>
+                                            
+                                        </li>
+                                            <li class="collapse ms-2" id="collapseE`+data.data[count].id_srt+`">
+                                                    <a href="#" id="delete" class="text-info"><i class="fa fa-eye bi me-3"></i></a>
+                                                    <a href="#" class="text-primary hovered"><i class="fa fa-edit bi me-2"></i></a>
+                                                    <a href="#" class="text-danger"  onclick="del('`+data.data[count].id_srt+`','`+data.data[count].id_prod+`','`+data.data[count].qte_srt+`','`+data.data[count].montant+`');"><i class="fa fa-trash bi me-2"></i></a>
+                                            </li>
+                                
+                                        `;
+
+
+                            }
+                        }
+
+                        $('#list_regenerate').html(html);
+                        $("#Total").val(montanttotal);
+                        $("#quantite_en_stock").val(parseInt(qteenstock)-parseInt(qte));
+                }
+                });
+            }
+         }
+
+         
+         
+         //tt.value = ;
+         
+      });
+
+    });
+   
+	function remplirbne(id, numbne, datbne) {
+		document.getElementById('idbns').value = id;
+		document.getElementById('numerobne').value = nom;
+		document.getElementById('datebne').value = datbne;
+	}
+
+    function remplirbns(id, nom, prenom, tel, adrs) {
+		document.getElementById('idbns').value = id;
+		document.getElementById('numerobns').value = nom;
+		document.getElementById('cliid').value = prenom;
+		document.getElementById('datebns').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+    
+    function remplirDonners(id, nom, prenom, tel, adrs) {
+		document.getElementById('id').value = id;
+		document.getElementById('nom').value = nom;
+		document.getElementById('prenom').value = prenom;
+		document.getElementById('tel').value = tel;
+		document.getElementById('adresse').value = adrs;
+	}
+
+	function supprimerbne(id) {
+		let pointfinal = '/bnenter/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+
+	}
+    
+    function supprimerbns(id) {
+		let pointfinal = '/bnsortir/delete/' +id
+
+		fetch(
+			pointfinal, {method : 'DELETE'}
+		).then(
+			(response) => response.json()
+		).then(
+			(donnee) => window.location.href = donnee.routeRacine
+		).catch((erreur) => console.log(erreur))
+	}
+
+    function del(idsrt,idprod,qtesortir,montant) {
+        //var id = $(this).data('id');
+        var id_bns = $("#id_bns").val();
+        console.log(idsrt +' id bne ='+id_bns);
+        var idwa = parseInt(idsrt);
+        var idpro = parseInt(idprod);
+        var qtesrt = parseInt(qtesortir);
+        var montants = parseInt(montant);
+        //console.log('idwa = '+idwa);
+
+        var montd = $("#Total").val();
+        var montanttotaldel = parseInt(montd)-montants;
+
+        var qteenstock = $("#quantite_en_stock").val();
+
+        $.ajax({
+           type: "post",
+           url: "/stocksortir/delete",
+           //data: { achatid: achatid, prodid: produitval, qte: qte, montant: montant, date: date, idcli: cliids, montanttotal: montanttotal},
+           data: { idsrt: idwa, bnsid: id_bns, idpro: idpro, qtesrt: qtesrt, montant: montants},
+           success: function(data) {
+             //$("#list_regenerate").html(results);
+             //$("#Total").val(montanttotal);
+             console.log(data);
+
+             var html = '';
+
+                if(data.data.length > 0)
+                {
+                    for(var count = 0; count < data.data.length; count++)
+                    {
+                        html += `
+                        
+                                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseE`+data.data[count].id_srt+`" aria-expanded="false" aria-controls="collapseE">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold"> `+data.data[count].nom_prod+`</div>
+                                        `+data.data[count].cat_prod+`
+                                    </div> 
+                                    <span class="badge bg-success rounded-pill">`+data.data[count].qte_srt+`</span>
+                                    
+                                </li>
+                                    <li class="collapse ms-2" id="collapseE`+data.data[count].id_srt+`">
+                                            <a href="#" id="delete" class="text-info"><i class="fa fa-eye bi me-3"></i></a>
+                                            <a href="#" class="text-primary hovered"><i class="fa fa-edit bi me-2"></i></a>
+                                            <a href="#" class="text-danger"  onclick="del('`+data.data[count].id_srt+`','`+data.data[count].id_prod+`','`+data.data[count].qte_srt+`','`+data.data[count].montant+`');"><i class="fa fa-trash bi me-2"></i></a>
+                                    </li>
+                        
+                                `;
+
+
+                    }
+                }
+
+                $('#list_regenerate').html(html);
+                 $("#Total").val(montanttotaldel);
+                 console.log('produit = '+$('#produit').val()+' idpro = '+idpro);
+                 if($('#produit').val()==idpro){
+                    $("#quantite_en_stock").val(parseInt(qteenstock)+parseInt(qtesrt));
+                 }
+                 //$("#quantite_en_stock").val(parseInt(qte)-parseInt(qteenstock));
+           }
+         });
+    }
+
+    //icon success, message sign up success
+    function alertsw (icon,message) {
+        const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            //toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+        })
+
+        Toast.fire({
+        icon: icon,
+        title: message
+        })
+    }
+
+</script>
+
+
+<script>
+    $(document).ready(function() {
+    /*  $("#produit").change(function() {
+         var selectvalueoption = $(this).val();
+         var quantite = $("#quantite").val();
+         
+         if(selectvalueoption!="0"){
+             $.ajax({
+                type: "post",
+                url: "getvalue",
+                data: { selectValue: selectvalueoption},
+                success: function(response) {
+                     var prx = $("#prix").val(response);
+
+                     var sm = parseInt(quantite)*parseInt(response);
+                        if(quantite != ""){
+                            $("#montantid").val(sm);
+                        } else{
+                            $("#montantid").val("0");
+                        }
+                }
+              });
+         } else{
+                 $("#prix").val("0");
+         }
+         /*
+         setTimeout(function(){ 
+              var quantite = $("#quantite").val();
+              var prix = $("#prix").val();
+              var somme = parseInt(quantite)*parseInt(prix);
+                     if(quantite != ""){
+                         $("#montantid").val(somme);
+                     } else{
+                         $("#montantid").val("0");
+                     }
+         }, 1000);
+         * /
+      }); */
+     
+     $("#quantite").on("keyup", function() {
+         var qtevalue = $(this).val();
+         var prixval = $("#prix").val();
+         var sum = parseInt(qtevalue)*parseInt(prixval);
+         
+         if(qtevalue != ""){
+             $("#montantid").val(sum);
+         } else{
+             $("#montantid").val("0");
+         }
+         
+         
+      });
+      
+     /* $("#cart").on("click", function() {
+         
+         var achatid = $("#idac").val();//mbola tsiss
+         var produitval = $("#produit").val();
+         var prixval = $("#prix").val();
+         var qte = $("#quantite").val();
+         var montant = $("#montantid").val();
+         var date = $("#dat").val();
+         var cliids = $("#cliids").val();
+         var mont = $("#montattoat").val();
+         var montd = $("#Total").val();
+         //var montanttotal = parseInt(montant)+parseInt(mont);
+         var montanttotal = parseInt(montd)+parseInt(montant);
+         var ul = $("#list_regenerate").val();
+         //var tt = $("#Total").val();
+         /*
+         $("#list_regenerate").append("<ol class='list-group list-group-numbered'>"+
+         "<li class='list-group-item d-flex justify-content-between align-items-start'>"+
+           "<div class='ms-2 me-auto'>"+
+             "<div class='fw-bold'>Subheading</div>Content for list item</div>"+
+           "<span class='badge bg-primary rounded-pill'>14</span>"+
+         "</li>"+
+         "</ol>");
+ * /
+         //Totalalert("produit id ="+produitval+" prix ="+prixval+" qte ="+qte+" montant "+montant+" date = "+date+" id cli= "+cliids+" montanttot = "+montanttotal);
+         
+         $.ajax({
+           type: "post",
+           url: "./test/servletajoutcom.jsp",
+           data: { achatid: achatid, prodid: produitval, qte: qte, montant: montant, date: date, idcli: cliids, montanttotal: montanttotal},
+           success: function(results) {
+             $("#list_regenerate").html(results);
+             $("#Total").val(montanttotal);
+           }
+         });
+         
+         //tt.value = ;
+         
+      }); */
+      
+      
+     /*
+     $("#chbx").change(function() {
+         if(this.checked) {
+             $("#filterhide").removeAttr("disabled");
+         } else {
+             $("#filterhide").attr("disabled", "disabled");
+         }
+     });*/
+     $("#chbx").change(function() {
+         
+         if(this.checked) {
+             //le checkbox est selectionner
+             $("#filterhide").removeAttr("hidden");
+             $("#recherchehide").removeAttr("hidden");
+             $("#clienthide").attr("hidden", "disabled");
+             $("#clientrchhide").removeAttr("hidden");
+             /*$("#client_id").val("");*/
+         } else {
+             $("#filterhide").attr("hidden", "disabled");
+             $("#recherchehide").attr("hidden", "disabled");
+             $("#clienthide").removeAttr("hidden");
+             $("#clientrchhide").attr("hidden", "disabled");
+             //$("#rch").val("");
+             //$("#clien_id_srch").val("");
+         }
+     });
+      $("#rch").on("keyup", function() {
+         var searchTerm = $(this).val();
+         var search = document.getElementById("filtersearch");
+         //var searchT = document.getElementById("rch");
+         var search_dt = search.value;
+         //var searchTerm = searchT.value;
+         //var ser = $("#wheresearch").val();
+         $.ajax({
+           type: "GET",
+           url: "search_com",
+           data: { searchTerm: searchTerm, search_dt: search_dt },
+           success: function(results) {
+             $("#client_id_srch").html(results);
+           }
+         });
+       });
+ } );
+ 
+
+</script>
+
+</html>

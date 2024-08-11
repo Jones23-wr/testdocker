@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/imports/all/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="../public/imports/all/bootstrap.min.css" id="bootstrap-css">
+    <script src="../public/imports/all/bootstrap.min.js"></script>
+    <script src="../public/imports/table/jquery3.6.2.js"></script> -->
+    <!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="../public/imports/all/bootstrap.min.js"></script> -->
+    
+    <link href="/imports/invoice/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="/imports/invoice/jquery-1.11.1.min.js"></script>
+    <script src="/imports/invoice/bootstrap.min.js"></script>
+    <script src="/imports/all/bootstrap.min.js"></script>
+    
+    <title>Bons</title>
+    <style>
+        .invoice-title h2, .invoice-title h3 {
+            display: inline-block;
+        }
+
+        .table > tbody > tr > .no-line {
+            border-top: none;
+        }
+
+        .table > thead > tr > .no-line {
+            border-bottom: none;
+        }
+
+        .table > tbody > tr > .thick-line {
+            border-top: 2px solid;
+        }
+    </style>
+    <style type="text/css" media="print">
+            
+        /*Hide every other element*/
+        body * {
+            visibility: hidden;
+        }
+        /*Then displaying print cointaaainer elements*/
+        .print-container, .print-container * {
+            visibility: visible;
+        }
+        /*Adjusting postion*/
+        .print-container{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 95%;
+            overflow: none;
+        }
+        
+        #allcomand{
+            /*width: 200px;*/
+            background-color: lightblue;
+            /*height: 300px;*/
+            height: 95%;
+            /*width: 40px;*/
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-primary btn-sm" id="printbtn"><i class="fa fa-print"></i></button>
+                </div>
+                <div class="col col-5">
+                    <div class="collapse" id="collapseExample">
+                        <div class="row">
+                            <div class="col col-sm-5">Receptionniste : <input class="form-control me-2" type="text" placeholder="Receptionniste" aria-label="Receptionniste" id="receptval"></div>
+                            <div class="col"></div>
+                            <div class="col"></div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col col-sm-5">Transporteur : <input class="form-control me-2" type="text" placeholder="Transporteur" aria-label="Transporteur" id="Transporteurval"></div>
+                            <div class="col col-sm-5">Chauffeur :  <input class="form-control me-2" type="text" placeholder="nom du chauffer" aria-label="nom_chauffer" id="nom_chaufferval"></div>
+                            <div class="col"></div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col col-sm-5"><button class="btn btn-primary" id="save">Save</button></div>
+                            <div class="col col-sm-5"></div>
+                            <div class="col"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+ <div class="print-container">       
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="invoice-title">
+                        <h2>BON D'ENTREE</h2>
+                        <h3 class="pull-right"># <%=allresultat[0].num_bne%></h3>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <address>
+                                <strong>LAZAN'I BESTILEO S.A</strong><br>
+                                <strong>ISAHA FIANARANTSOA</strong><br>
+                                <strong>Compte BOA Fia :</strong> 00009 0200 1900023006 87<br>
+                                <strong>Compte BIN Fia :</strong> 00005 00052 27101014 83<br>
+                                <strong>STAT :</strong> 151915 21 1983 0 00014<br>
+                            </address>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <address>
+                                <!-- <strong><u>Nom du réceptionniste</u>:</strong><br>
+                                Jane Smith<br>
+                                1234 Main<br>
+                                Apt. 4B<br>
+                                Springfield, ST 54321 -->
+                            </address>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <address>
+                                <strong><u>Date</u>:</strong><%=bnttresult[0].date_bne.toLocaleDateString('fr-FR')%><br>
+                                <strong><u>Orignie / Provenance</u> :</strong> Cave Centrale<br>
+                                <strong><u>Transporteur</u> :</strong><span id="idtrans">VARIO N°4333</span><br>
+                                <strong><u>Nom du chauffeur</u> :</strong><span id="idchauf"> Mr riri</span><br>
+                                
+                            </address>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <address>
+                                <strong><u>Nom du réceptionniste</u>:</strong><span id="idrecept"> NIRINA Niaina</span><br>
+                                <!-- Jane Smith<br>
+                                1234 Main<br>
+                                Apt. 4B<br>
+                                Springfield, ST 5432 -->
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Liste des produits</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>Quantite</strong></td>
+                                            <td class="text-center"><strong>Designation</strong></td>
+                                            <td class="text-center"><strong>Observation</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                        <!-- .toLocaleDateString('fr-FR') .toISOString().slice(0,10) -->
+                                        <% allresultat.forEach(valiny => { %>
+                                        <tr>
+                                            <td><%=valiny.qte_ent%></td>
+                                            <td class="text-center"><%=valiny.nom_prod%></td>
+                                            <td class="text-center"><%=valiny.date_ent%></td>
+                                        </tr>
+                                        <% })%>
+                                        <tr>
+                                            <td class="thick-line text-center"><strong>Le Receptionniste</strong></td>
+                                            <td class="thick-line text-center"><strong>Le Transporteur</strong></td>
+                                            <td class="thick-line text-center"><strong>Le Responsable</strong></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong></strong></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong></strong></td>
+                                        
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        </div>
+    
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#save').click(function () { 
+            var recept = $('#receptval').val();
+            var transp = $('#Transporteurval').val();
+            var nomch = $('#nom_chaufferval').val();
+
+            $('#idrecept').html(recept);
+            $('#idtrans').html(transp);
+            $('#idchauf').html(nomch);
+        });
+
+        $('#printbtn').click(function () { 
+            window.print();
+        });
+    });
+    
+
+</script>
+</html>

@@ -1,0 +1,81 @@
+<div class="modal" id="edit_<%= resultat[i].id_prod %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/produits/add" method="POST">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Modification du produit</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!--<table border="">-->
+                    <div class="container-fluid">
+
+                        <input type="hidden" class="form-control" name="id" placeholder="Entrer votre id" value="<%= resultat[i].id_prod %>">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Nom : </span>
+                            <input type="text" class="form-control" name="nom" placeholder="Entrer le nom du vin" value="<%= resultat[i].nom_prod %>" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Catégorie : </span>
+                            <input type="text" class="form-control" name="categorie" placeholder="Entrer le categorie" value="<%= resultat[i].cat_prod %>" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Quantité : </span>
+                            <input type="number" class="form-control" name="quantite" placeholder="Entrer le quantite" value="<%= resultat[i].quantite %>" required readonly>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Prix : </span>
+                            <input type="number" class="form-control" name="prix" placeholder="Entrer le prix" value="<%= resultat[i].prix %>" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" value="modify"><i
+                        class="fa fa-edit bi me-2"></i>Modifier</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="delete_<%= resultat[i].id_prod %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/produits/add" method="POST">
+                <div class="modal-header">
+                    <h5>Suppression de produit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="id_prod_delete"
+                                value="<%= resultat[i].id_prod %>" hidden>
+                            <h6 class="text-center">êtes-vous sur de vouloir supprimer cet client numero
+                                <%= resultat[i].id_prod +' de Nom '+ resultat[i].nom_prod+' de category '+ resultat[i].cat_prod %>?</h6>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" value="delete" onclick="supprimer('<%=resultat[i].id_prod%>')" ><i
+                            class="fa fa-trash bi me-2"></i>Oui</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Non</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

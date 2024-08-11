@@ -1,0 +1,2738 @@
+WEBVTT
+Kind: captions
+Language: fr
+
+00:00:00.610 --> 00:00:04.823
+Dans cette vidéo, vous apprendrez à créer une application fullstack
+
+00:00:04.823 --> 00:00:09.992
+en utilisant node.js, express, mysql côté backend
+
+00:00:09.992 --> 00:00:12.830
+et réagir js sur le front-end
+
+00:00:12.830 --> 00:00:15.451
+commencer par créer des données
+
+00:00:16.148 --> 00:00:17.806
+par exemple ici Joko
+
+00:00:21.385 --> 00:00:22.998
+lire des données
+
+00:00:23.416 --> 00:00:25.155
+puis modifiez les données
+
+00:00:25.155 --> 00:00:26.659
+par exemple ici laura
+
+00:00:28.750 --> 00:00:30.243
+puis supprimer
+
+00:00:31.637 --> 00:00:35.553
+à quoi ressemble le processus de fabrication
+commençons
+
+00:00:36.761 --> 00:00:40.844
+ici, j'ai créé un dossier vide appelé fullstack
+
+00:00:40.844 --> 00:00:43.480
+et c'est là que je vais réaliser notre projet
+
+00:00:43.480 --> 00:00:47.793
+avant de commencer assurez-vous d'avoir installé node.js sur votre ordinateur
+
+00:00:47.793 --> 00:00:49.692
+si vous n'avez pas installé node.js
+
+00:00:49.692 --> 00:00:53.836
+veuillez vous rendre sur le site officiel, à savoir
+nodejs.org
+
+00:00:53.836 --> 00:00:59.585
+puis téléchargez node.js selon votre plateforme et installez-le sur votre ordinateur
+
+00:00:59.585 --> 00:01:04.624
+une fois node.js installé correctement sur votre ordinateur et assurez-vous
+
+00:01:04.624 --> 00:01:09.062
+Vous pouvez taper la commande node -v comme ceci
+
+00:01:09.062 --> 00:01:12.237
+cela signifie que j'utilise node.js version 16
+
+00:01:12.237 --> 00:01:17.239
+alors ce node.js inclut avec NPM ou Node Package Manager
+
+00:01:17.239 --> 00:01:23.559
+et pour vous assurer que vous pouvez taper la commande npm -v comme ceci
+
+00:01:23.559 --> 00:01:28.593
+cela signifie que j'utilise npm version
+8.1.2
+
+00:01:28.593 --> 00:01:30.540
+je vais effacer à nouveau
+
+00:01:30.540 --> 00:01:36.211
+Ensuite, je créerai un sous-dossier ici, je le nommerai backend
+
+00:01:36.211 --> 00:01:43.608
+et je vais entrer ce dossier backend dans Terminal par cd backend
+
+00:01:43.608 --> 00:01:46.946
+maintenant je suis dans le dossier backend
+
+00:01:46.946 --> 00:01:50.138
+puis je vais créer un fichier package.json
+
+00:01:50.138 --> 00:01:54.945
+avec la commande npm init -y comme celle-ci
+
+00:01:54.945 --> 00:01:56.305
+Entrer
+
+00:01:56.723 --> 00:02:02.450
+alors maintenant dans le dossier backend il y a un fichier qui est package.json
+
+00:02:02.450 --> 00:02:06.471
+puis j'installerai quelques dépendances dont nous avons besoin
+
+00:02:06.471 --> 00:02:12.015
+pour installer les dépendances, nous pouvons utiliser la commande npm install
+
+00:02:12.015 --> 00:02:14.910
+ou il peut être abrégé comme j'aime ça
+
+00:02:14.910 --> 00:02:18.130
+le premier je vais installer express
+
+00:02:18.130 --> 00:02:23.051
+puis je vais aussi installer le client mysql, à savoir mysql2
+
+00:02:23.051 --> 00:02:27.245
+puis j'installe aussi
+sequelize
+
+00:02:27.245 --> 00:02:33.919
+sequelize c'est ORM ou mappage relationnel d'objet pour la base de données relationnelle
+
+00:02:33.919 --> 00:02:39.012
+alors j'installerai aussi cors ou cross-origin-resource-sharing
+
+00:02:39.012 --> 00:02:42.772
+afin que plus tard notre API soit accessible depuis l'extérieur du domaine
+
+00:02:42.772 --> 00:02:44.006
+Entrer
+
+00:02:46.144 --> 00:02:48.667
+si l'installation est terminée
+
+00:02:48.667 --> 00:02:57.966
+ici vous pouvez voir dans le fichier package.json qu'il y a des dépendances, à savoir cors, express, mysql2 et sequelize
+
+00:02:57.966 --> 00:03:02.029
+alors ici il y a un point d'entrée, à savoir index.js
+
+00:03:02.029 --> 00:03:06.684
+alors ici je vais ajouter le type
+
+00:03:07.009 --> 00:03:09.183
+alors le type est module
+
+00:03:09.183 --> 00:03:15.933
+cela fonctionne pour que plus tard nous puissions utiliser la syntaxe ES6 pour importer et exporter des modules
+
+00:03:15.933 --> 00:03:16.940
+enregistrer
+
+00:03:16.940 --> 00:03:20.138
+alors nous allons créer le fichier index.js ici
+
+00:03:20.138 --> 00:03:22.661
+assurez-vous qu'il se trouve dans le dossier backend
+
+00:03:22.661 --> 00:03:25.479
+index.js
+
+00:03:25.479 --> 00:03:33.673
+alors ici je vais importer express depuis express
+
+00:03:33.673 --> 00:03:40.536
+et j'importerai aussi cors de cors
+
+00:03:41.466 --> 00:03:49.258
+alors je vais créer une
+variable const app = express
+
+00:03:50.420 --> 00:03:53.722
+puis app.listen
+
+00:03:54.094 --> 00:03:57.853
+alors voici le port je vais utiliser le port 5000
+
+00:03:57.853 --> 00:04:00.200
+alors ici il y a un rappel
+
+00:04:00.200 --> 00:04:04.207
+alors je donnerai un message ici console.log
+
+00:04:05.555 --> 00:04:11.250
+alors le message est serveur opérationnel
+
+00:04:13.434 --> 00:04:16.776
+ici j'ai ajouté quelques middleware
+
+00:04:16.776 --> 00:04:20.202
+le premier est app.use
+
+00:04:20.202 --> 00:04:22.004
+le premier est cors
+
+00:04:23.491 --> 00:04:26.705
+alors je vais aussi utiliser express json
+
+00:04:27.960 --> 00:04:30.703
+express.json
+
+00:04:31.214 --> 00:04:35.203
+pour que plus tard nous puissions recevoir des
+demandes au format json
+
+00:04:35.203 --> 00:04:36.386
+enregistrer
+
+00:04:36.386 --> 00:04:39.991
+pour s'assurer que notre application fonctionne bien
+
+00:04:39.991 --> 00:04:43.374
+nous pouvons exécuter notre projet dans Terminal ici
+
+00:04:43.374 --> 00:04:46.049
+et je vais le lancer en
+utilisant nodemon
+
+00:04:46.049 --> 00:04:48.538
+j'ai installé nodemon globalement
+
+00:04:48.538 --> 00:04:52.618
+si vous n'avez pas installé nodemon
+globalement, vous pouvez taper la commande
+
+00:04:52.618 --> 00:04:58.424
+npm install -g nodemon comme ceci
+
+00:04:58.424 --> 00:05:01.813
+mais je n'exécuterai pas cette commande
+
+00:05:01.813 --> 00:05:04.801
+parce que j'ai installé nodemon globalement
+
+00:05:04.801 --> 00:05:09.132
+pour vous assurer que nodemon est installé globalement sur votre ordinateur
+
+00:05:10.201 --> 00:05:12.334
+vous pouvez taper la commande
+
+00:05:12.566 --> 00:05:16.328
+nodemon -v comme ceci
+
+00:05:16.793 --> 00:05:21.185
+ici j'utilise nodemon version 2.0.15
+
+00:05:21.185 --> 00:05:23.770
+cela signifie que j'ai installé nodemon
+
+00:05:23.770 --> 00:05:25.640
+si nodemon a été installé
+
+00:05:25.640 --> 00:05:28.597
+nous pouvons exécuter notre projet
+avec des commandes
+
+00:05:28.597 --> 00:05:31.302
+index nodemon
+
+00:05:31.302 --> 00:05:35.375
+cet index est notre point d'entrée qui est index.js
+
+00:05:35.886 --> 00:05:37.162
+Entrer
+
+00:05:37.534 --> 00:05:43.712
+Si un message comme celui-ci apparaît, le serveur est opérationnel, cela signifie que notre application fonctionne bien
+
+00:05:43.712 --> 00:05:47.009
+Ensuite, je crée un nouveau dossier ici
+
+00:05:47.009 --> 00:05:49.683
+assurez-vous qu'il se trouve dans le dossier backend
+
+00:05:49.683 --> 00:05:53.858
+je vais créer un nouveau dossier que je nomme config
+
+00:05:53.858 --> 00:05:58.104
+puis dans le dossier config je vais créer un nouveau fichier
+
+00:05:58.104 --> 00:06:02.931
+Je l'ai nommé Database.js
+
+00:06:03.256 --> 00:06:05.885
+ici je vais faire le lien
+
+00:06:07.140 --> 00:06:10.259
+le premier je vais importer sequelize
+
+00:06:10.259 --> 00:06:13.930
+importer je vais appeler directement comme ça
+
+00:06:14.720 --> 00:06:19.963
+séquelle de séquelle
+
+00:06:19.963 --> 00:06:22.420
+alors je vais créer une variable
+
+00:06:22.420 --> 00:06:30.327
+const db = nouvelle séquelle
+
+00:06:30.327 --> 00:06:35.440
+puis voici le nom de la base de données que j'ai nommé crud_db
+
+00:06:35.440 --> 00:06:40.068
+alors ici le nom d'utilisateur est root
+
+00:06:40.068 --> 00:06:42.800
+alors voici le mot de passe
+pour la base de données
+
+00:06:42.800 --> 00:06:46.560
+Je vais le laisser vide car je n'utilise pas de mot de passe sur la base de données
+
+00:06:46.560 --> 00:06:53.307
+puis ici il y a l'hôte, à savoir localhost
+
+00:06:54.329 --> 00:06:59.268
+alors ici il y a un dialecte, c'est
+le SGBD que nous utilisons
+
+00:06:59.268 --> 00:07:02.871
+dans ce cas en utilisant MySQL
+
+00:07:03.986 --> 00:07:06.617
+alors nous exportons simplement ceci
+
+00:07:07.035 --> 00:07:10.301
+exporter la base de données par défaut
+
+00:07:10.301 --> 00:07:11.687
+enregistrer
+
+00:07:11.687 --> 00:07:16.471
+alors nous avons juste besoin de créer cette base de données crud_db
+
+00:07:16.471 --> 00:07:18.704
+ici j'utilise xampp
+
+00:07:18.704 --> 00:07:21.875
+assurez-vous qu'Apache et MySQL fonctionnent bien
+
+00:07:21.875 --> 00:07:24.052
+alors allez parce que le navigateur
+
+00:07:24.796 --> 00:07:29.558
+visitez localhost/phpmyadmin
+
+00:07:31.138 --> 00:07:33.743
+puis allez dans la base de données
+
+00:07:34.161 --> 00:07:39.595
+alors je vais créer une nouvelle base de données crud_db comme celle-ci
+
+00:07:39.595 --> 00:07:40.678
+créer
+
+00:07:40.678 --> 00:07:44.413
+alors maintenant nous avons la base de données crud_db
+
+00:07:44.413 --> 00:07:46.003
+retour à vs code
+
+00:07:46.003 --> 00:07:50.717
+puis je créerai à nouveau un dossier pour m'assurer qu'il se trouve dans le dossier principal
+
+00:07:50.717 --> 00:07:52.823
+J'ai nommé des modèles
+
+00:07:52.823 --> 00:07:56.306
+puis dans le dossier des modèles je vais créer un nouveau fichier
+
+00:07:56.306 --> 00:08:01.655
+Je l'ai nommé UserModel.js
+
+00:08:01.887 --> 00:08:07.800
+Ce modèle contient une structure de table pour la façon dont nos données sont stockées plus tard dans la base de données
+
+00:08:07.800 --> 00:08:10.542
+le premier je vais importer sequelize
+
+00:08:10.914 --> 00:08:12.935
+J'appellerai directement comme ça
+
+00:08:14.701 --> 00:08:18.010
+de séquelle
+
+00:08:18.335 --> 00:08:23.090
+alors je vais également importer la connexion car nous avons besoin de la connexion
+
+00:08:23.090 --> 00:08:28.068
+importer la connexion que nous prenons du fichier Database.js
+
+00:08:28.068 --> 00:08:29.649
+dans la config ici
+
+00:08:29.649 --> 00:08:38.610
+db de ../config kemudian Database.js
+
+00:08:38.610 --> 00:08:43.555
+puis ici const DataTypes
+
+00:08:43.555 --> 00:08:46.279
+c'est la fonction de sequelize
+
+00:08:46.279 --> 00:08:50.440
+la même chose que séquelle comme ça
+
+00:08:50.440 --> 00:08:53.610
+alors je vais créer la
+structure de la table ici
+
+00:08:53.610 --> 00:09:00.740
+const User = db.define
+
+00:09:00.740 --> 00:09:06.155
+voici le nom de la table, je vais donner le nom de la table, à savoir utilisateurs
+
+00:09:06.155 --> 00:09:07.325
+comme ça
+
+00:09:07.325 --> 00:09:10.460
+alors dans le deuxième paramètre il y a le champ
+
+00:09:10.460 --> 00:09:13.479
+puis dans le troisième paramètre il y a une option
+
+00:09:13.479 --> 00:09:17.345
+ici, je vais donner une option qui est geler le nom de la table
+
+00:09:17.717 --> 00:09:20.635
+et je vais le mettre à true
+
+00:09:20.635 --> 00:09:23.406
+et ici sur le terrain
+
+00:09:23.406 --> 00:09:28.665
+le premier champ est le nom et
+j'appellerai DataTypes directement ici
+
+00:09:29.037 --> 00:09:31.472
+Je vais donner le type qui est une chaîne
+
+00:09:31.472 --> 00:09:33.995
+je vais dupliquer ça
+
+00:09:33.995 --> 00:09:38.339
+puis le deuxième champ est email
+
+00:09:38.339 --> 00:09:42.365
+alors le troisième champ est le sexe
+
+00:09:42.365 --> 00:09:46.764
+Les DataTypes sont toujours les mêmes, c'est-à-dire que ma chaîne supprimera la dernière virgule
+
+00:09:46.764 --> 00:09:50.243
+alors nous exportons simplement ceci
+
+00:09:50.243 --> 00:09:54.509
+exporter l'utilisateur par défaut comme celui-ci
+
+00:09:54.509 --> 00:09:59.446
+alors je vais créer une fonction ici
+
+00:09:59.446 --> 00:10:05.745
+qui fonctionne pour générer une table si la table des utilisateurs n'est pas trouvée dans la base de données
+
+00:10:05.745 --> 00:10:08.391
+je peux utiliser une fonction comme celle-ci
+
+00:10:08.391 --> 00:10:12.307
+comme c'est asyncronus, j'utiliserai async
+
+00:10:14.212 --> 00:10:15.507
+comme ça
+
+00:10:15.507 --> 00:10:17.923
+c'est la même chose que la fonction habituelle
+
+00:10:17.923 --> 00:10:21.120
+il n'a tout simplement pas de nom sur la fonction
+
+00:10:21.120 --> 00:10:25.325
+et nous pouvons appeler la fonction directement comme ceci
+
+00:10:25.325 --> 00:10:26.913
+de cette façon
+
+00:10:26.913 --> 00:10:32.391
+et cette fonction s'exécutera lorsque nous appellerons le fichier UserModel
+
+00:10:32.391 --> 00:10:39.890
+et à l'intérieur de cette fonction, je vais ajouter une fonction comme celle-ci attendre puis ici db.sync
+
+00:10:40.494 --> 00:10:41.705
+comme ça
+
+00:10:41.705 --> 00:10:43.435
+enregistrer
+
+00:10:43.435 --> 00:10:48.582
+alors je vais créer un autre nouveau dossier ici assurez-vous qu'il est dans le dossier backend
+
+00:10:48.582 --> 00:10:50.844
+J'ai nommé les contrôleurs
+
+00:10:51.866 --> 00:10:55.214
+et dans ce dossier j'ai créé un nouveau fichier
+
+00:10:55.214 --> 00:11:00.290
+Je l'ai nommé UserController.js
+
+00:11:00.290 --> 00:11:03.792
+alors j'importerai le modèle
+ici
+
+00:11:03.792 --> 00:11:09.072
+import je donne le nom User puis de ../
+
+00:11:09.072 --> 00:11:11.114
+Alors voici les modèles
+
+00:11:11.114 --> 00:11:16.089
+puis ici le nom du fichier est UserModel.js
+
+00:11:16.647 --> 00:11:21.759
+puis je vais créer une méthode ici j'exporterai directement
+
+00:11:21.759 --> 00:11:27.570
+export const puis j'ai nommé la méthode getUsers
+
+00:11:27.570 --> 00:11:30.750
+et j'utiliserai la fonction asynchrone
+
+00:11:31.215 --> 00:11:36.513
+et ici il y a deux paramètres
+, à savoir la demande puis la réponse
+
+00:11:37.210 --> 00:11:40.209
+et je vais utiliser un bloc try and catch
+
+00:11:40.674 --> 00:11:45.271
+alors ici en essayant je vais créer une variable
+
+00:11:45.271 --> 00:11:50.569
+réponse puis attendre l'utilisateur
+
+00:11:50.569 --> 00:11:53.652
+Cet utilisateur est du modèle ici
+
+00:11:54.070 --> 00:11:56.607
+.Trouver tout
+
+00:11:57.769 --> 00:12:00.122
+c'est la fonction de sequelize
+
+00:12:00.122 --> 00:12:04.524
+alors je donnerai res.status
+
+00:12:04.524 --> 00:12:07.150
+Je vais donner le statut qui est de 200
+
+00:12:07.150 --> 00:12:09.922
+alors je donne
+la réponse ici
+
+00:12:09.922 --> 00:12:14.968
+json alors je vais analyser la réponse ici
+
+00:12:14.968 --> 00:12:18.823
+alors s'il y a une erreur, je consignerai l'erreur dans la console
+
+00:12:18.823 --> 00:12:25.240
+console.log alors je consignerai l'erreur dans la console error.message
+
+00:12:26.170 --> 00:12:27.358
+comme ça
+
+00:12:27.358 --> 00:12:28.517
+enregistrer
+
+00:12:28.517 --> 00:12:32.284
+puis je créerai à nouveau un dossier
+
+00:12:32.981 --> 00:12:36.060
+J'ai nommé des itinéraires
+
+00:12:36.060 --> 00:12:39.612
+puis dans ce dossier j'ai créé un nouveau fichier
+
+00:12:39.612 --> 00:12:44.778
+Je l'ai nommé UserRoute.js
+
+00:12:44.778 --> 00:12:48.721
+Ce fichier est utilisé pour gérer tout le routage
+
+00:12:48.721 --> 00:12:51.798
+le premier ici je vais
+importer express
+
+00:12:53.192 --> 00:12:55.872
+de l'express
+
+00:12:55.872 --> 00:12:59.071
+parce que nous utilisons un routeur express
+
+00:12:59.071 --> 00:13:08.903
+alors ici const router = express.Router like this
+
+00:13:09.647 --> 00:13:12.341
+alors j'exporterai directement ici
+
+00:13:12.341 --> 00:13:16.711
+exporter le routeur par défaut
+
+00:13:16.711 --> 00:13:20.908
+alors je vais importer le contrôleur ici
+
+00:13:20.908 --> 00:13:24.535
+importer je vais appeler directement comme ça
+
+00:13:24.535 --> 00:13:34.833
+de ../controllers alors ici le
+nom du contrôleur est UserController.js
+
+00:13:35.077 --> 00:13:37.646
+Nous appelons simplement la méthode ici
+
+00:13:37.646 --> 00:13:39.621
+le premier est getUsers
+
+00:13:39.621 --> 00:13:43.340
+alors je vais créer un nouveau point de terminaison ici
+
+00:13:43.340 --> 00:13:48.858
+le premier est le routeur alors ici la méthode est get
+
+00:13:48.858 --> 00:13:54.120
+alors ici le point final est /users
+
+00:13:54.120 --> 00:13:59.513
+puis dans le deuxième paramètre il y a la méthode de getUsers
+
+00:13:59.513 --> 00:14:01.335
+du contrôleur
+
+00:14:01.335 --> 00:14:02.507
+enregistrer
+
+00:14:02.507 --> 00:14:08.956
+alors nous appelons simplement cette UserRoute dans index.js ici
+
+00:14:08.956 --> 00:14:11.466
+nous vivons importer ici
+
+00:14:11.901 --> 00:14:20.299
+importer UserRoute depuis ./ puis c'est-à-dire les routes
+
+00:14:20.299 --> 00:14:24.945
+alors le nom du fichier est UserRoute.js comme ceci
+
+00:14:24.945 --> 00:14:27.938
+et nous l'appelons simplement middleware ici
+
+00:14:27.938 --> 00:14:32.710
+app.use(UserRoute) comme ceci
+
+00:14:32.710 --> 00:14:36.219
+Je vais encore agrandir le terminal ici
+
+00:14:36.219 --> 00:14:38.464
+si je garde
+
+00:14:39.068 --> 00:14:48.520
+puis ici il y a une requête qui est exécutée pour créer une table, à savoir la table des utilisateurs dans la base de données
+
+00:14:48.520 --> 00:14:51.094
+maintenant si nous revenons
+au navigateur
+
+00:14:51.094 --> 00:14:54.590
+et nous visitons la base de données crud_db
+
+00:14:55.380 --> 00:15:00.543
+alors maintenant nous avons une table, à savoir la table des utilisateurs ici
+
+00:15:02.216 --> 00:15:05.207
+nous pouvons voir la structure ici
+
+00:15:05.951 --> 00:15:10.196
+ici il y a un champ qui est id comme
+clé primaire
+
+00:15:10.196 --> 00:15:13.107
+puis nom, email, sexe
+
+00:15:13.107 --> 00:15:16.003
+puis créé à et mis à jour à
+
+00:15:16.003 --> 00:15:20.434
+selon le schéma que nous avons fait dans le modèle
+
+00:15:20.434 --> 00:15:26.719
+alors nous pouvons
+tester si notre API fonctionne bien
+
+00:15:27.695 --> 00:15:33.704
+ici pour faire le test
+j'utilise l'extension qui est REST Client
+
+00:15:33.704 --> 00:15:40.084
+vous pouvez utiliser Postman mais j'utilise cette extension client REST
+
+00:15:40.084 --> 00:15:44.089
+Si vous n'avez pas installé cette extension,
+veuillez d'abord l'installer
+
+00:15:44.089 --> 00:15:45.929
+je refermerai
+
+00:15:45.929 --> 00:15:48.141
+retour à notre projet
+
+00:15:48.141 --> 00:15:51.551
+si vous avez installé l'extension REST Client
+
+00:15:51.551 --> 00:15:56.358
+nous pouvons créer un fichier ici pour tester notre API
+
+00:15:56.358 --> 00:15:59.146
+assurez-vous qu'il se trouve dans le dossier backend
+
+00:15:59.146 --> 00:16:07.103
+nouveau fichier et je le nommerai request.rest comme ceci
+
+00:16:07.335 --> 00:16:08.747
+Entrer
+
+00:16:08.747 --> 00:16:12.757
+ici la première est la méthode
+qui est get
+
+00:16:12.757 --> 00:16:22.425
+alors ici le point d'entrée est http://localhost puis le port est 5000
+
+00:16:22.425 --> 00:16:26.670
+alors / utilisateurs aiment ça
+
+00:16:26.670 --> 00:16:29.894
+cliquez sur le lien ici envoyer la demande
+
+00:16:30.824 --> 00:16:33.472
+alors voici la réponse
+
+00:16:33.472 --> 00:16:39.913
+avec le statut 200 d'accord, nous obtenons une réponse tableau vide
+
+00:16:39.913 --> 00:16:45.308
+cela signifie que notre point de terminaison fonctionne bien, c'est juste que nous n'avons pas encore les données
+
+00:16:46.609 --> 00:16:49.970
+retour à UserController ici
+
+00:16:49.970 --> 00:16:55.568
+alors je vais créer une autre méthode pour prendre des données uniques
+
+00:16:55.568 --> 00:16:59.374
+Je vais le copier puis le coller ici
+
+00:16:59.374 --> 00:17:05.724
+et je vais changer cela pour getUserById comme ceci
+
+00:17:05.724 --> 00:17:13.505
+ici je vais changer pour trouver un comme ça
+
+00:17:13.505 --> 00:17:18.585
+puis ici nous recherchons
+les données basées sur le paramètre id
+
+00:17:18.585 --> 00:17:22.108
+Je vais ajouter ici l'option où
+
+00:17:23.038 --> 00:17:26.716
+alors ici le champ est id
+
+00:17:26.716 --> 00:17:36.498
+puis nous prenons l'identifiant du paramètre, à savoir req.params.id comme ceci
+
+00:17:36.498 --> 00:17:37.450
+enregistrer
+
+00:17:37.450 --> 00:17:41.564
+puis allez sur UserRoute.js ici
+
+00:17:41.564 --> 00:17:45.649
+et je vais ajouter ici le point de terminaison je vais dupliquer ceci
+
+00:17:45.649 --> 00:17:53.173
+alors ici je vais ajouter la méthode, à savoir getUserById comme ceci
+
+00:17:53.173 --> 00:17:55.302
+Je vais entrer ceci
+
+00:17:57.254 --> 00:17:58.542
+comme ça
+
+00:17:59.007 --> 00:18:03.746
+alors ici getUserById
+
+00:18:03.746 --> 00:18:07.547
+alors nous ajoutons juste le paramètre id ici
+
+00:18:07.547 --> 00:18:12.428
+/ : alors ici le paramètre est id
+
+00:18:12.428 --> 00:18:15.553
+comme ça, la méthode est toujours la même, à savoir obtenir
+
+00:18:15.553 --> 00:18:16.806
+enregistrer
+
+00:18:16.806 --> 00:18:20.228
+retour à request.rest ici
+
+00:18:20.600 --> 00:18:23.089
+et je ferai une nouvelle demande
+
+00:18:23.786 --> 00:18:25.414
+je vais copier ça
+
+00:18:26.344 --> 00:18:31.770
+puis collez-le ici et séparez-le avec un ### comme ceci
+
+00:18:31.770 --> 00:18:33.912
+alors il y a un lien ici
+
+00:18:33.912 --> 00:18:41.590
+puis je rajoute ici les paramètres / par exemple 1 send request
+
+00:18:41.590 --> 00:18:45.830
+alors là on obtient un statut de 200 d'accord
+
+00:18:45.830 --> 00:18:48.702
+et ici nous obtenons une réponse nulle
+
+00:18:48.702 --> 00:18:54.352
+cela signifie que notre point de terminaison fonctionne bien uniquement puisque nous n'avons pas les données
+
+00:18:55.142 --> 00:18:57.354
+retour à UserController
+
+00:18:57.354 --> 00:19:02.334
+et je vais créer des méthodes pour créer des données, mettre à jour et supprimer
+
+00:19:02.334 --> 00:19:06.289
+Je vais le copier puis le coller ici
+
+00:19:06.289 --> 00:19:12.113
+et je vais changer cela en createUser
+
+00:19:12.113 --> 00:19:14.210
+alors je vais supprimer
+ça
+
+00:19:14.954 --> 00:19:20.232
+attendre puis User.create
+
+00:19:20.232 --> 00:19:22.465
+alors voici les données
+
+00:19:22.465 --> 00:19:27.943
+les données sont extraites de req.body comme
+ceci
+
+00:19:27.943 --> 00:19:36.508
+alors ici le statut de réponse je vais changer en 201 qui est créé
+
+00:19:36.508 --> 00:19:41.118
+alors ici je vais donner un message msg
+
+00:19:41.118 --> 00:19:47.597
+et le message que je donnerai à l'utilisateur créé comme ça
+
+00:19:47.597 --> 00:19:49.159
+enregistrer
+
+00:19:49.159 --> 00:19:51.630
+aller à UserRoute.js
+
+00:19:51.630 --> 00:19:55.625
+je vais ajouter ici createUser
+
+00:19:55.625 --> 00:19:57.660
+alors je vais dupliquer ça
+
+00:19:57.660 --> 00:20:00.971
+et je changerai la méthode en Post
+
+00:20:00.971 --> 00:20:06.199
+alors le point de terminaison est /users car nous n'utilisons pas de paramètres
+
+00:20:06.199 --> 00:20:10.810
+et ici je vais le changer en createUser comme ceci
+
+00:20:10.810 --> 00:20:12.046
+enregistrer
+
+00:20:12.046 --> 00:20:15.014
+maintenant de retour à request.rest
+
+00:20:15.014 --> 00:20:18.421
+je vais faire une nouvelle demande je vais copier ceci
+
+00:20:18.421 --> 00:20:21.463
+séparez-le avec un ### comme ceci
+
+00:20:22.021 --> 00:20:23.143
+pâte
+
+00:20:23.143 --> 00:20:27.377
+alors voici la méthode je ferai un post
+
+00:20:27.377 --> 00:20:30.488
+et ici j'ajoute le type de contenu
+
+00:20:30.488 --> 00:20:34.676
+c'est-à-dire application/json comme ceci
+
+00:20:34.676 --> 00:20:38.298
+et puis voici les données que
+nous allons envoyer
+
+00:20:38.298 --> 00:20:40.823
+les données sont au format json
+
+00:20:40.823 --> 00:20:43.756
+assurez-vous dans un guillemet double comme celui-ci
+
+00:20:43.756 --> 00:20:45.867
+le premier est le nom
+
+00:20:46.657 --> 00:20:51.898
+alors voici la valeur par exemple John Doe
+
+00:20:51.898 --> 00:21:01.975
+alors ici l'email email est
+john@gmail.com
+
+00:21:01.975 --> 00:21:08.378
+puis ici genre, par exemple, ici masculin
+
+00:21:08.378 --> 00:21:11.037
+cliquez sur envoyer la demande
+
+00:21:11.037 --> 00:21:16.001
+alors ici il y a un statut qui est 201 créé
+
+00:21:16.001 --> 00:21:19.126
+et voici le message créé par l'utilisateur
+
+00:21:19.126 --> 00:21:22.685
+cela signifie que nos données sont
+enregistrées avec succès dans la base de données
+
+00:21:22.685 --> 00:21:25.577
+cliquez à nouveau sur obtenir une demande ici
+
+00:21:25.577 --> 00:21:32.467
+alors maintenant, nous obtenons 1 données ici
+john avec email john@gmail.com avec le sexe masculin
+
+00:21:32.467 --> 00:21:34.772
+ici il y a un identifiant qui vaut 1
+
+00:21:34.772 --> 00:21:37.586
+nous pouvons utiliser l'id 1 ici
+
+00:21:37.586 --> 00:21:38.938
+envoyer une demande
+
+00:21:38.938 --> 00:21:43.032
+nous obtenons maintenant les données de John Doe avec l'id 1
+
+00:21:43.032 --> 00:21:45.296
+nous obtenons des données uniques ici
+
+00:21:45.296 --> 00:21:48.662
+cela signifie que notre API fonctionne bien
+
+00:21:48.662 --> 00:21:50.740
+retour à UserController
+
+00:21:50.740 --> 00:21:55.290
+alors nous n'avons plus qu'à créer une méthode pour mettre à jour et supprimer
+
+00:21:55.290 --> 00:21:56.964
+je vais copier ça
+
+00:21:56.964 --> 00:21:58.247
+coller ici
+
+00:21:58.247 --> 00:22:02.420
+et je vais changer cela en updateUser
+
+00:22:02.885 --> 00:22:08.447
+alors ici je vais changer cette création pour mettre à jour
+
+00:22:08.447 --> 00:22:12.612
+et nous le mettons à jour en fonction de l'identifiant du paramètre
+
+00:22:12.612 --> 00:22:17.738
+et j'ajouterai dans le deuxième paramètre ici l'option après req.body
+
+00:22:18.342 --> 00:22:19.307
+comme ça
+
+00:22:19.307 --> 00:22:21.340
+J'ajouterai ici où
+
+00:22:21.898 --> 00:22:25.630
+alors ici le champ est id
+
+00:22:25.630 --> 00:22:33.035
+nous prenons l'identifiant du paramètre req.params.id comme ceci
+
+00:22:33.035 --> 00:22:36.593
+alors je vais changer le statut à 200
+
+00:22:36.593 --> 00:22:43.604
+et je changerai le message en utilisateur mis à jour
+
+00:22:43.604 --> 00:22:46.041
+comme ça je vais recopier ça
+
+00:22:46.692 --> 00:22:48.570
+puis coller ici
+
+00:22:48.570 --> 00:22:53.064
+et ici je vais le changer en deleteUser
+
+00:22:53.064 --> 00:22:59.751
+et je vais changer cette mise à jour pour détruire comme ça
+
+00:22:59.751 --> 00:23:02.433
+pour supprimer nous n'avons pas besoin de données
+
+00:23:02.433 --> 00:23:05.074
+Je vais supprimer le req.body ici
+
+00:23:05.074 --> 00:23:10.792
+et le message que je vais changer en utilisateur supprimé
+
+00:23:10.792 --> 00:23:11.737
+comme ça
+
+00:23:11.737 --> 00:23:12.787
+enregistrer
+
+00:23:12.787 --> 00:23:15.704
+retour à UserRoute.js
+
+00:23:15.704 --> 00:23:18.728
+et j'ajouterai ici le point final
+
+00:23:18.728 --> 00:23:20.293
+je vais dupliquer ça
+
+00:23:20.293 --> 00:23:25.418
+alors ici je vais ajouter la méthode, à savoir updateUser
+
+00:23:25.418 --> 00:23:29.004
+puis supprimez l'utilisateur comme celui-ci
+
+00:23:29.004 --> 00:23:33.896
+et ici je vais changer la méthode pour un patch à mettre à jour
+
+00:23:33.896 --> 00:23:36.811
+et nous le mettons à jour en fonction de l'identifiant du paramètre
+
+00:23:36.811 --> 00:23:39.300
+Je vais ajouter ici le paramètre id
+
+00:23:40.000 --> 00:23:44.409
+alors ici updateUser
+
+00:23:44.409 --> 00:23:47.658
+et pour supprimer la méthode est supprimer
+
+00:23:47.937 --> 00:23:50.925
+et ici nous avons aussi besoin du paramètre id
+
+00:23:51.622 --> 00:23:55.525
+alors ici deleteUser comme ça
+
+00:23:55.525 --> 00:23:56.813
+enregistrer
+
+00:23:56.813 --> 00:23:58.975
+retour à request.rest
+
+00:23:58.975 --> 00:24:02.152
+Je ferai une nouvelle demande
+de mise à jour
+
+00:24:02.152 --> 00:24:03.441
+copier ceci
+
+00:24:03.441 --> 00:24:07.387
+puis séparez-le avec un ### comme ceci
+
+00:24:07.387 --> 00:24:08.624
+pâte
+
+00:24:08.624 --> 00:24:12.586
+et je changerai la méthode pour un patch comme celui-ci
+
+00:24:12.586 --> 00:24:15.757
+et nous avons besoin du paramètre id pour la mise à jour
+
+00:24:15.757 --> 00:24:18.434
+Je vais ajouter ici l'identifiant qui est 1
+
+00:24:18.434 --> 00:24:20.988
+parce que nous avons des données avec l'id 1
+
+00:24:20.988 --> 00:24:25.601
+et je changerai ce John Doe par exemple en M Fikri
+
+00:24:25.601 --> 00:24:31.732
+alors je changerai l'email en mfikri@gmail.com
+
+00:24:31.732 --> 00:24:33.448
+le sexe est toujours le même
+
+00:24:33.448 --> 00:24:35.038
+envoyer une demande
+
+00:24:35.038 --> 00:24:38.194
+alors ici il y a un message mis à jour par l'utilisateur
+
+00:24:38.194 --> 00:24:42.444
+cela signifie que nous avons mis à jour avec succès cet utilisateur John Doe
+
+00:24:42.444 --> 00:24:47.163
+si je clique sur envoyer la demande sur l'utilisateur avec l'id 1
+
+00:24:47.163 --> 00:24:53.255
+alors maintenant, les données ont changé pour M Fikri comme ça et l'e-mail a également changé
+
+00:24:53.255 --> 00:24:56.094
+Je vais ajouter une autre donnée
+
+00:24:56.094 --> 00:24:57.993
+Je posterai ce John Doe
+
+00:24:57.993 --> 00:24:59.091
+envoyer une demande
+
+00:24:59.091 --> 00:25:00.599
+utilisateur créé
+
+00:25:00.599 --> 00:25:03.840
+si je clique sur envoyer la demande pour tous les utilisateurs
+
+00:25:03.840 --> 00:25:08.333
+alors maintenant nous avons deux données ici avec id 1 et 2
+
+00:25:08.333 --> 00:25:12.328
+maintenant je vais supprimer une de ces données
+
+00:25:12.328 --> 00:25:13.795
+je vais copier ça
+
+00:25:13.795 --> 00:25:16.420
+Je ferai une nouvelle demande ici
+
+00:25:16.420 --> 00:25:18.647
+séparer par ###
+
+00:25:18.647 --> 00:25:19.828
+pâte
+
+00:25:19.828 --> 00:25:23.765
+alors je changerai la méthode pour supprimer
+
+00:25:23.765 --> 00:25:27.157
+je vais supprimer les données avec l'id 2
+
+00:25:27.157 --> 00:25:28.694
+comme ça
+
+00:25:28.694 --> 00:25:29.981
+envoyer une demande
+
+00:25:29.981 --> 00:25:32.818
+alors ici il y a un message utilisateur
+supprimé
+
+00:25:32.818 --> 00:25:36.440
+cela signifie que nous avons réussi à supprimer les données avec l'identifiant 2
+
+00:25:36.998 --> 00:25:40.986
+et si nous envoyons une demande à tous les utilisateurs
+
+00:25:40.986 --> 00:25:45.388
+et maintenant nous avons une donnée ici, à savoir M Fikri
+
+00:25:45.388 --> 00:25:48.522
+Je vais ajouter une autre donnée ici
+
+00:25:48.522 --> 00:25:49.803
+envoyer la demande lagi
+
+00:25:49.803 --> 00:25:52.155
+maintenant nous avons deux autres données
+
+00:25:52.155 --> 00:25:54.245
+avec les identifiants 1 et 3
+
+00:25:55.035 --> 00:25:58.474
+jusqu'à ce que la création du backend soit terminée
+
+00:25:58.474 --> 00:26:01.766
+Ensuite, nous nous concentrerons
+sur le frontend
+
+00:26:01.766 --> 00:26:03.694
+je vais tout fermer
+
+00:26:09.224 --> 00:26:13.255
+pour le frontend ici j'utilise
+React JS
+
+00:26:13.255 --> 00:26:15.759
+si vous n'êtes pas familier avec react js
+
+00:26:15.759 --> 00:26:22.553
+Je suggère d'étudier le
+tutoriel React JS pour les débutants, le lien est inclus dans la description
+
+00:26:23.668 --> 00:26:25.996
+Je vais ouvrir un nouveau terminal ici
+
+00:26:26.554 --> 00:26:28.069
+nouvelle borne
+
+00:26:28.069 --> 00:26:31.313
+et maintenant je suis dans le dossier fullstack
+
+00:26:31.313 --> 00:26:34.015
+pas dans le dossier backend
+
+00:26:34.015 --> 00:26:36.776
+pour créer un projet en utilisant react js
+
+00:26:36.776 --> 00:26:38.656
+on tape juste la commande
+
+00:26:38.656 --> 00:26:44.453
+npx créer-réagir-app
+
+00:26:44.453 --> 00:26:47.644
+alors voici le nom du projet
+
+00:26:47.644 --> 00:26:52.056
+ici j'ai nommé frontend comme ça
+
+00:26:52.056 --> 00:26:53.833
+Entrer
+
+00:27:03.043 --> 00:27:09.528
+si l'installation est terminée ici il y a deux
+dossiers à savoir backend et frontend
+
+00:27:09.528 --> 00:27:12.915
+le backend est le projet que nous avons construit plus tôt
+
+00:27:12.915 --> 00:27:18.088
+tandis que le frontend est un projet que nous construisons en utilisant React JS
+
+00:27:18.088 --> 00:27:23.647
+puis j'irai dans le dossier frontend dans Terminal
+
+00:27:23.647 --> 00:27:28.697
+par cd frontal
+
+00:27:28.697 --> 00:27:32.683
+maintenant je suis dans le dossier frontend
+
+00:27:32.683 --> 00:27:37.402
+puis j'installerai quelques dépendances dont nous avons besoin
+
+00:27:37.402 --> 00:27:45.552
+npm installer d'abord je vais installer react-router-dom
+
+00:27:46.203 --> 00:27:49.408
+car nous aurons besoin d'un routeur plus tard
+
+00:27:49.408 --> 00:27:56.743
+ensuite je vais aussi installer axios et bulma CSS pour le style
+
+00:27:56.743 --> 00:27:59.486
+Entrer
+
+00:28:01.333 --> 00:28:06.440
+puis allez dans le fichier package.json sur le
+frontend
+
+00:28:06.440 --> 00:28:10.512
+ici il y a des dépendances à savoir axios, bulma
+
+00:28:10.512 --> 00:28:15.807
+et aussi react-router-dom
+ici j'utilise la version 6.3.0
+
+00:28:17.062 --> 00:28:22.019
+Ensuite, pour s'assurer que notre frontend fonctionne bien
+
+00:28:22.019 --> 00:28:24.528
+nous pouvons exécuter notre projet
+
+00:28:24.528 --> 00:28:29.787
+avec la commande npm start comme celle-ci
+
+00:28:33.700 --> 00:28:37.124
+puis allez dans le navigateur
+
+00:28:37.496 --> 00:28:40.985
+et visitez le port localhost 3000
+
+00:28:40.985 --> 00:28:44.732
+si ça se passe bien
+ça ressemblera à ça
+
+00:28:49.180 --> 00:28:52.677
+Ensuite je vais faire un petit
+nettoyage
+
+00:28:53.095 --> 00:28:56.404
+allez dans le dossier src
+
+00:28:56.404 --> 00:29:00.012
+alors je supprimerai le fichier App.css
+
+00:29:02.522 --> 00:29:06.117
+Je vais également supprimer le fichier App.test.js
+
+00:29:08.348 --> 00:29:11.107
+Je vais également supprimer le
+fichier index.css
+
+00:29:12.129 --> 00:29:14.693
+puis logo.svg
+
+00:29:16.691 --> 00:29:19.611
+puis reportWebVitals.js
+
+00:29:20.726 --> 00:29:23.255
+puis setupTests.js
+
+00:29:24.649 --> 00:29:28.892
+Je n'ai laissé que les fichiers App.js et index.js
+
+00:29:28.892 --> 00:29:32.106
+d'abord je vais au fichier index.js
+
+00:29:32.803 --> 00:29:36.666
+et je supprimerai import index.css
+
+00:29:36.666 --> 00:29:40.646
+Je supprimerai également import reportWebVitals
+
+00:29:40.646 --> 00:29:43.740
+et je supprimerai également la méthode ici
+
+00:29:43.740 --> 00:29:45.487
+enregistrer
+
+00:29:45.487 --> 00:29:48.472
+puis allez sur App.js
+
+00:29:48.751 --> 00:29:53.577
+Je supprimerai le logo d'importation et App.css
+
+00:29:53.577 --> 00:29:58.519
+alors je supprimerai également cette balise d'en-tête
+
+00:29:59.309 --> 00:30:02.348
+et je supprimerai également ce nom de classe
+
+00:30:03.510 --> 00:30:06.252
+Je n'ai laissé qu'un seul div ici
+
+00:30:06.252 --> 00:30:09.349
+puis je vais ajouter la balise h1
+
+00:30:09.349 --> 00:30:12.909
+alors je donnerai lorem 5
+
+00:30:13.513 --> 00:30:15.267
+enregistrer
+
+00:30:15.267 --> 00:30:17.698
+retour au navigateur
+
+00:30:17.698 --> 00:30:21.914
+alors ici il y a
+cinq mots du texte lorem ipsum
+
+00:30:21.914 --> 00:30:23.921
+retour à vs code
+
+00:30:23.921 --> 00:30:27.953
+ensuite je vais intégrer le style avec bulma CSS
+
+00:30:27.953 --> 00:30:30.442
+aller à index.js
+
+00:30:30.954 --> 00:30:32.954
+je vais importer ici
+
+00:30:33.279 --> 00:30:44.586
+import puis bulma puis /css/bulma.css comme ceci
+
+00:30:44.586 --> 00:30:45.914
+enregistrer
+
+00:30:46.425 --> 00:30:48.474
+retour au navigateur
+
+00:30:48.799 --> 00:30:52.218
+maintenant le style a été réinitialisé par bulma CSS
+
+00:30:53.612 --> 00:30:56.798
+Ensuite, je vais créer un dossier ici
+
+00:30:56.798 --> 00:31:02.870
+dans le dossier src je donne le nom des composants
+
+00:31:03.288 --> 00:31:07.317
+puis à l'intérieur du dossier des composants créera un nouveau fichier de composant
+
+00:31:08.061 --> 00:31:13.037
+Je l'ai nommé UserList.js
+
+00:31:13.037 --> 00:31:15.482
+Vous pouvez également utiliser .jsx
+
+00:31:15.482 --> 00:31:18.214
+mais ici j'utilise .js
+
+00:31:18.214 --> 00:31:20.456
+Je peux changer la langue ici
+
+00:31:21.386 --> 00:31:26.599
+et je vais changer pour javascript réagir ici
+
+00:31:26.599 --> 00:31:29.655
+pour que plus tard les extraits fonctionnent bien
+
+00:31:29.655 --> 00:31:33.457
+pour nous faciliter la création de composants dans react js
+
+00:31:33.457 --> 00:31:37.156
+ici je vous propose d'installer l'extension
+
+00:31:37.760 --> 00:31:42.539
+Extraits de code ES7 + React/Redux/React-Native
+
+00:31:42.539 --> 00:31:46.850
+cette extension nous facilitera la tâche si nous jouons avec react
+
+00:31:46.850 --> 00:31:51.036
+si vous n'avez pas installé cette extension, veuillez l'installer
+
+00:31:52.105 --> 00:31:54.137
+retour à notre projet
+
+00:31:54.137 --> 00:31:57.451
+si parce que vous avez installé l'extension
+
+00:31:57.451 --> 00:32:02.901
+nous tapons juste ici rafce comme ceci entrez
+
+00:32:02.901 --> 00:32:08.660
+il générera automatiquement le code de base à partir du composant de réaction comme celui-ci
+
+00:32:08.660 --> 00:32:11.197
+alors je vais supprimer cette div
+
+00:32:11.429 --> 00:32:17.139
+et je ferai d'abord un tableau ici je ferai d'abord les colonnes
+
+00:32:17.139 --> 00:32:22.490
+je vais créer un div avec des colonnes de classe comme celle-ci
+
+00:32:22.490 --> 00:32:24.670
+puis à l'intérieur de la div
+
+00:32:25.646 --> 00:32:32.024
+il y a un autre div avec une classe de colonne sans s comme celui-ci
+
+00:32:32.024 --> 00:32:33.311
+Entrer
+
+00:32:33.311 --> 00:32:36.311
+il sera généré automatiquement comme ceci
+
+00:32:36.311 --> 00:32:40.958
+alors ici je vais donner margin-top 5
+
+00:32:40.958 --> 00:32:42.847
+c'est la classe bulma
+
+00:32:42.847 --> 00:32:50.080
+alors ici je vais ajouter la classe is-half
+
+00:32:50.963 --> 00:32:52.116
+comme ça
+
+00:32:52.116 --> 00:32:56.121
+puis temporairement
+j'ajoute ici lorem ipsum
+
+00:32:56.121 --> 00:33:01.273
+Je vais ajouter ici h1 lorem5
+
+00:33:01.273 --> 00:33:02.632
+enregistrer
+
+00:33:02.957 --> 00:33:09.990
+alors j'importerai ce composant dans son composant parent qui est App.js
+
+00:33:09.990 --> 00:33:11.382
+je vais importer ici
+
+00:33:11.382 --> 00:33:18.340
+importer UserList à partir de composants et UserList comme celui-ci
+
+00:33:19.177 --> 00:33:21.585
+alors je vais remplacer ça
+
+00:33:21.585 --> 00:33:26.744
+devenir une UserList comme celle-ci
+
+00:33:27.069 --> 00:33:28.323
+enregistrer
+
+00:33:28.323 --> 00:33:30.424
+retour au navigateur
+
+00:33:31.493 --> 00:33:38.971
+puis ici il y a cinq mots de texte lorem ipsum et ici il y a margin-top
+
+00:33:38.971 --> 00:33:41.086
+retour à vs code
+
+00:33:41.086 --> 00:33:43.812
+retour à UserList.js
+
+00:33:43.812 --> 00:33:49.113
+alors je veux que ce composant soit au milieu de la page
+
+00:33:49.113 --> 00:33:56.468
+Je peux ajouter une classe ici centrée comme celle-ci
+
+00:33:56.468 --> 00:33:58.530
+c'est la classe bulma
+
+00:33:59.181 --> 00:34:00.660
+enregistrer
+
+00:34:00.985 --> 00:34:02.844
+retour au navigateur
+
+00:34:02.844 --> 00:34:07.012
+alors maintenant le texte est au milieu de la page comme ceci
+
+00:34:07.012 --> 00:34:09.519
+retour à vs code
+
+00:34:09.798 --> 00:34:13.336
+Ensuite, je vais créer une table ici
+
+00:34:14.201 --> 00:34:15.734
+table
+
+00:34:16.431 --> 00:34:22.565
+puis dans le tableau il y a une balise thead pour le tableau
+
+00:34:22.565 --> 00:34:27.667
+puis dans la balise thead il y a une ligne
+
+00:34:27.667 --> 00:34:32.881
+puis dans la ligne il y a une colonne pour le titre
+
+00:34:33.253 --> 00:34:37.601
+et je ferai la colonne 5 comme ceci
+
+00:34:37.601 --> 00:34:41.245
+et je grouperai comme ça
+
+00:34:44.870 --> 00:34:51.549
+alors je vais ajouter ici un autre groupe qui est body
+
+00:34:52.804 --> 00:34:53.612
+comme ça
+
+00:34:53.612 --> 00:34:59.818
+puis dans le corps il y a une ligne puis dans la ligne il y a une colonne
+
+00:35:00.236 --> 00:35:03.733
+et je ferai aussi la colonne à cinq comme ça
+
+00:35:04.244 --> 00:35:05.373
+Entrer
+
+00:35:05.838 --> 00:35:09.591
+il générera automatiquement une table comme celle-ci
+
+00:35:10.288 --> 00:35:13.446
+alors je vais ajouter une classe à la table
+
+00:35:14.004 --> 00:35:15.532
+c'est le tableau
+
+00:35:15.532 --> 00:35:19.761
+alors je vais également ajouter la classe is-striped
+
+00:35:21.062 --> 00:35:22.170
+comme ça
+
+00:35:22.170 --> 00:35:28.129
+alors est pleine largeur comme ceci
+
+00:35:28.780 --> 00:35:30.854
+alors voici le numéro
+
+00:35:31.644 --> 00:35:34.985
+et voici le nom
+
+00:35:36.193 --> 00:35:45.390
+alors voici l'e-mail, le sexe et l'action comme celle-ci
+
+00:35:45.390 --> 00:35:46.809
+enregistrer
+
+00:35:47.599 --> 00:35:49.698
+retour au navigateur
+
+00:35:50.000 --> 00:35:53.458
+alors maintenant nous avons une table ici
+
+00:35:53.458 --> 00:35:57.995
+avec les colonnes numéro, nom, email, genre et action
+
+00:35:58.413 --> 00:36:00.452
+retour à vs code
+
+00:36:00.452 --> 00:36:04.304
+alors je vais chercher les données directement ici dans le tableau
+
+00:36:04.304 --> 00:36:07.459
+depuis notre API depuis le backend
+
+00:36:08.203 --> 00:36:12.515
+ici j'utilise useState et useEffect hook
+
+00:36:12.515 --> 00:36:15.490
+Je vais ajouter ici useState et useEffect
+
+00:36:17.070 --> 00:36:22.739
+useState puis useEffect comme ceci
+
+00:36:22.739 --> 00:36:28.235
+alors j'importerai aussi des axios car on va interagir avec l'API
+
+00:36:28.514 --> 00:36:35.662
+importer des axios à partir d'axios
+
+00:36:37.056 --> 00:36:39.889
+alors je vais créer un nouvel état ici
+
+00:36:40.540 --> 00:36:44.489
+const j'ai nommé des utilisateurs
+
+00:36:44.489 --> 00:36:54.658
+alors la fonction pour mettre à jour l'état est setUser égal à useState
+
+00:36:54.658 --> 00:36:59.809
+et ici la valeur initiale je vais entrer un tableau vide comme celui-ci
+
+00:37:00.599 --> 00:37:04.438
+puis je vais créer une
+méthode pour récupérer les données
+
+00:37:04.438 --> 00:37:10.238
+const j'ai nommé getUsers comme ça
+
+00:37:10.610 --> 00:37:14.023
+et j'utiliserai la fonction asynchrone
+
+00:37:16.672 --> 00:37:30.862
+alors ici réponse const = attendre axios.get
+
+00:37:30.862 --> 00:37:38.888
+alors ici le point de terminaison est
+http://localhost
+
+00:37:38.888 --> 00:37:40.861
+alors voici le port
+
+00:37:40.861 --> 00:37:48.789
+C'est le port de notre backend
+qui est de 5000/utilisateurs comme celui-ci
+
+00:37:48.789 --> 00:37:53.524
+puis pendant un certain temps, je vais enregistrer la réponse dans la console
+
+00:37:53.524 --> 00:38:00.667
+console.log(response.data) comme ceci
+
+00:38:00.667 --> 00:38:04.845
+alors je vais exécuter cette fonction dans le crochet useEffect
+
+00:38:04.845 --> 00:38:07.114
+je vais ajouter ici useEffect
+
+00:38:10.786 --> 00:38:14.994
+alors ici getUsers comme ça
+
+00:38:14.994 --> 00:38:18.203
+puis ici dans le deuxième paramètre
+
+00:38:18.203 --> 00:38:22.715
+je vais ajouter le tableau vide des dépendances comme ceci
+
+00:38:22.715 --> 00:38:28.132
+cela signifie que cet useEffect s'exécute lorsque le composant est monté sur le DOM
+
+00:38:28.132 --> 00:38:29.441
+enregistrer
+
+00:38:29.441 --> 00:38:31.427
+aller au navigateur
+
+00:38:31.427 --> 00:38:34.016
+et j'inspecterai Element
+
+00:38:35.178 --> 00:38:37.446
+puis va dans la console
+
+00:38:37.446 --> 00:38:43.771
+maintenant nous avons les données ici, à savoir M Fikri et John Doe comme ça
+
+00:38:43.771 --> 00:38:47.452
+et nous venons de mettre les données dans l'état
+
+00:38:49.501 --> 00:38:53.523
+Je vais l'ajouter ici à l'état
+
+00:38:53.523 --> 00:38:56.207
+setUser comme ça
+
+00:38:56.207 --> 00:38:59.637
+puis response.data comme celui-ci
+
+00:38:59.637 --> 00:39:04.176
+et maintenant je boucle juste cet état ici
+
+00:39:06.267 --> 00:39:09.365
+utilisateurs.map
+
+00:39:10.899 --> 00:39:16.247
+alors ici, je vais
+donner le nom de l'élément est l'utilisateur comme celui-ci
+
+00:39:16.247 --> 00:39:20.766
+alors je vais aussi appeler l'index comme ça
+
+00:39:21.138 --> 00:39:23.739
+alors ici la fonction flèche
+
+00:39:23.739 --> 00:39:26.801
+généralement nous utilisons des accolades
+
+00:39:26.801 --> 00:39:33.807
+parce que je vais retourner la syntaxe jsx dans cette boucle, j'utiliserai des crochets ordinaires comme celui-ci
+
+00:39:34.318 --> 00:39:36.721
+alors je vais couper ça
+
+00:39:37.651 --> 00:39:39.549
+et coller ici
+
+00:39:40.200 --> 00:39:43.338
+et ici chaque boucle a une clé unique
+
+00:39:43.338 --> 00:39:45.661
+Je vais ajouter la clé ici
+
+00:39:45.661 --> 00:39:49.986
+la clé est extraite de user.id comme ceci
+
+00:39:49.986 --> 00:39:55.767
+alors voici le numéro
+que je prendrai de l'index
+
+00:39:55.767 --> 00:40:03.111
+cet index commence à partir de 0 donc je peux ajouter ici + 1 comme ceci
+
+00:40:03.529 --> 00:40:05.358
+alors voici le nom
+
+00:40:05.358 --> 00:40:08.914
+Nom d'utilisateur
+
+00:40:08.914 --> 00:40:20.054
+puis ici user.email et ici
+user.gender comme ceci
+
+00:40:20.054 --> 00:40:25.258
+puis ici dans l'action j'ajoute des boutons pour modifier et supprimer
+
+00:40:25.258 --> 00:40:27.579
+je vais ajouter ici le bouton
+
+00:40:27.579 --> 00:40:29.631
+alors je donnerai cours
+
+00:40:29.631 --> 00:40:39.359
+la classe est le bouton puis est-petit puis est-info comme ceci
+
+00:40:39.359 --> 00:40:42.943
+et je donnerai l'étiquette d'édition
+
+00:40:42.943 --> 00:40:48.463
+Je vais dupliquer ceci puis ici pour supprimer
+
+00:40:48.463 --> 00:40:53.679
+et je vais changer cette is-info en
+is-danger comme ça
+
+00:40:53.679 --> 00:40:55.270
+enregistrer
+
+00:40:55.270 --> 00:40:57.328
+retour au navigateur
+
+00:40:57.328 --> 00:41:04.024
+maintenant nous avons deux données ici M Fikri et John Doe avec des boutons d'édition et de suppression
+
+00:41:05.837 --> 00:41:09.486
+Ensuite, je vais créer un nouveau fichier de composant
+
+00:41:09.486 --> 00:41:18.048
+nouveau fichier que j'ai nommé AddUser.js comme ceci
+
+00:41:18.048 --> 00:41:23.490
+Je vais changer la langue en javascript réagir comme ça
+
+00:41:24.048 --> 00:41:28.086
+comme d'habitude
+
+00:41:28.086 --> 00:41:30.835
+alors je vais supprimer ça
+
+00:41:30.835 --> 00:41:34.147
+je vais créer un div avec des colonnes de classe
+
+00:41:34.705 --> 00:41:44.003
+puis à l'intérieur de cette div il y a une autre div avec une classe de colonne sans s comme ça
+
+00:41:44.421 --> 00:41:51.166
+alors ici, je vais ajouter une autre classe is-half comme celle-ci
+
+00:41:51.166 --> 00:41:55.328
+alors là je rajoute une classe margin-top 5
+
+00:41:55.607 --> 00:42:02.725
+alors je vais également ajouter une classe centrée comme celle-ci
+
+00:42:02.725 --> 00:42:06.676
+alors ici je vais faire un formulaire
+
+00:42:08.303 --> 00:42:14.449
+alors ici je vais créer un autre div avec le champ de classe
+
+00:42:15.564 --> 00:42:23.152
+et puis ici je vais créer une étiquette avec l'étiquette de classe
+
+00:42:24.082 --> 00:42:26.880
+Je vais supprimer le htmlFor
+
+00:42:26.880 --> 00:42:31.146
+et ici je vais donner la première étiquette, à savoir le nom
+
+00:42:32.401 --> 00:42:36.414
+alors je vais créer
+une autre div avec le contrôle de classe
+
+00:42:37.669 --> 00:42:40.596
+alors ici je vais créer le texte d'entrée
+
+00:42:41.572 --> 00:42:45.201
+avec une classe d'entrée comme celle-ci
+
+00:42:45.201 --> 00:42:48.497
+J'ai ajouté ici un espace réservé
+
+00:42:48.497 --> 00:42:52.252
+Je vais donner ici un nom comme celui-ci
+
+00:42:52.252 --> 00:42:55.014
+alors je vais copier ça
+
+00:42:55.386 --> 00:42:57.374
+puis collez-le ici
+
+00:42:57.374 --> 00:43:02.113
+et ici pour le courrier électronique
+
+00:43:02.113 --> 00:43:06.100
+et ici aussi email
+
+00:43:06.100 --> 00:43:08.716
+alors je vais coller à nouveau ici
+
+00:43:09.553 --> 00:43:12.312
+et ici pour le sexe
+
+00:43:12.591 --> 00:43:15.569
+pour le sexe, j'utiliserai select
+
+00:43:15.569 --> 00:43:17.187
+je vais supprimer ça
+
+00:43:17.559 --> 00:43:21.787
+Je vais faire une autre div avec class select
+
+00:43:22.438 --> 00:43:23.674
+comme ça
+
+00:43:23.674 --> 00:43:28.666
+et j'ai aussi ajouté
+la classe is-fullwidth
+
+00:43:28.666 --> 00:43:33.701
+puis dans cette div je ferai une sélection
+
+00:43:35.002 --> 00:43:39.814
+Je supprimerai le nom et l'
+identifiant car nous n'en avons pas besoin
+
+00:43:39.814 --> 00:43:43.485
+alors dans cette sélection il y a une option
+
+00:43:43.485 --> 00:43:47.283
+alors ici la valeur est masculine
+
+00:43:47.283 --> 00:43:49.363
+alors ici mâle
+
+00:43:49.363 --> 00:43:51.505
+je vais dupliquer ça
+
+00:43:52.435 --> 00:43:57.553
+alors voici une femelle comme celle-ci
+
+00:43:57.553 --> 00:44:00.349
+alors la valeur est aussi féminine
+
+00:44:01.697 --> 00:44:04.237
+et je vais copier un autre ici
+
+00:44:04.237 --> 00:44:05.410
+copie
+
+00:44:05.410 --> 00:44:07.628
+puis collez-le ici
+
+00:44:07.628 --> 00:44:11.869
+ici, nous n'avons pas besoin de cette étiquette et de ce contrôle de classe
+
+00:44:11.869 --> 00:44:13.542
+je vais supprimer ça
+
+00:44:13.542 --> 00:44:16.148
+Je vais ajouter ici le bouton
+
+00:44:16.659 --> 00:44:21.358
+alors le bouton est le type soumettre
+
+00:44:21.358 --> 00:44:23.547
+alors je donnerai cours
+
+00:44:23.547 --> 00:44:31.776
+la classe est un bouton alors est un succès comme celui-ci
+
+00:44:31.776 --> 00:44:36.036
+alors je donnerai une étiquette de sauvegarde comme celle-ci
+
+00:44:36.454 --> 00:44:37.813
+enregistrer
+
+00:44:37.813 --> 00:44:41.239
+retour à App.js
+
+00:44:41.239 --> 00:44:45.471
+alors ici je vais
+utiliser react-router-dom
+
+00:44:45.471 --> 00:44:47.384
+je vais importer ici
+
+00:44:47.384 --> 00:44:53.732
+importer de react-router-dom comme ceci
+
+00:44:53.732 --> 00:44:58.287
+d'abord je vais importer BrowserRouter
+
+00:44:58.287 --> 00:45:03.366
+alors j'importerai également des routes comme celle-ci
+
+00:45:03.738 --> 00:45:07.557
+puis route comme ça
+
+00:45:07.557 --> 00:45:14.120
+alors je changerai cette div en BrowserRouter
+
+00:45:14.120 --> 00:45:19.430
+et ici le BrowserRouter se ferme comme ça
+
+00:45:19.430 --> 00:45:24.777
+alors ici il y a des itinéraires
+
+00:45:24.777 --> 00:45:30.321
+puis dans Routes
+il y a une Route comme celle-ci
+
+00:45:30.321 --> 00:45:34.128
+Cette route a l'attribut path
+
+00:45:34.128 --> 00:45:37.447
+ici je donne / signifie maison
+
+00:45:37.447 --> 00:45:40.575
+alors ici il y a des éléments qui seront rendus
+
+00:45:40.575 --> 00:45:45.520
+et je vais rendre le composant UserList ici
+
+00:45:45.520 --> 00:45:47.071
+comme ça
+
+00:45:48.001 --> 00:45:50.229
+et je vais le dupliquer
+
+00:45:50.229 --> 00:45:55.393
+puis j'ai changé le chemin pour ajouter
+
+00:45:55.393 --> 00:45:58.402
+vous pouvez également ajouter / ajouter ici
+
+00:45:58.402 --> 00:46:02.347
+ou ça peut aussi être comme ça c'est seulement facultatif
+
+00:46:02.998 --> 00:46:05.908
+puis le composant à rendre
+
+00:46:06.326 --> 00:46:09.777
+je vais rendre le composant AddUser
+
+00:46:09.777 --> 00:46:12.245
+je vais importer ici
+
+00:46:12.245 --> 00:46:18.011
+importer AddUser à partir des composants AddUser
+
+00:46:18.011 --> 00:46:23.488
+et je vais changer cela en AddUser comme ceci
+
+00:46:23.488 --> 00:46:27.369
+et je supprimerai le composant UserList ici
+
+00:46:29.182 --> 00:46:30.532
+enregistrer
+
+00:46:30.532 --> 00:46:32.469
+retour au navigateur
+
+00:46:32.469 --> 00:46:38.174
+maintenant si je visite localhost: 3000
+
+00:46:38.406 --> 00:46:39.444
+j'ai rechargé
+
+00:46:39.444 --> 00:46:43.506
+alors la table des utilisateurs apparaîtra ici
+
+00:46:43.506 --> 00:46:47.762
+et si je visite localhost:3000/add
+
+00:46:49.296 --> 00:46:53.401
+Ensuite, le formulaire d'ajout d'utilisateur apparaîtra ici
+
+00:46:53.819 --> 00:46:55.878
+retour à vs code
+
+00:46:56.947 --> 00:47:00.072
+aller à AddUser.js
+
+00:47:00.072 --> 00:47:03.507
+alors ici j'ajoute le crochet useState
+
+00:47:03.739 --> 00:47:06.068
+je vais ajouter ici useState
+
+00:47:06.998 --> 00:47:11.906
+ensuite j'importerai des axios car on va interagir avec l'API
+
+00:47:11.906 --> 00:47:16.827
+importer des axios à partir d'axios
+
+00:47:16.827 --> 00:47:19.271
+alors je vais créer un nouvel état ici
+
+00:47:19.271 --> 00:47:27.075
+const d'abord c'est-à-dire nom puis setName
+
+00:47:27.075 --> 00:47:34.255
+useState et sa valeur initiale, j'entre une chaîne vide comme celle-ci
+
+00:47:34.534 --> 00:47:36.471
+je vais dupliquer ça
+
+00:47:37.493 --> 00:47:42.318
+le second est pour le courrier électronique
+
+00:47:42.969 --> 00:47:47.787
+puis setEmail
+
+00:47:48.019 --> 00:47:55.658
+puis ensemble de genreGender comme ça
+
+00:47:55.658 --> 00:48:00.457
+et la valeur initiale pour le sexe que j'ai mis ici mâle
+
+00:48:00.736 --> 00:48:07.379
+puis dans le texte d'entrée, je vais ajouter ici la valeur
+
+00:48:07.379 --> 00:48:13.672
+Je mets la valeur ici, l'état est le nom
+
+00:48:15.392 --> 00:48:19.740
+alors ici je vais ajouter onChange
+
+00:48:21.553 --> 00:48:24.361
+et j'attraperai l'événement ici
+
+00:48:25.895 --> 00:48:31.032
+alors voici la fonction pour mettre à
+jour l'état qui est setName
+
+00:48:31.636 --> 00:48:38.495
+alors ici e.target.value comme ça
+
+00:48:38.495 --> 00:48:40.911
+je vais copier ça
+
+00:48:42.119 --> 00:48:44.828
+puis coller ici
+
+00:48:46.687 --> 00:48:57.561
+et ici la valeur est email puis ici setEmail comme ceci
+
+00:48:58.444 --> 00:49:02.683
+et je vais coller à nouveau ici dans la sélection ici
+
+00:49:02.962 --> 00:49:11.761
+et voici le genre alors ici setGender comme ça
+
+00:49:11.761 --> 00:49:13.590
+enregistrer
+
+00:49:13.590 --> 00:49:19.920
+alors sur le formulaire ici je supprimerai l'action
+
+00:49:19.920 --> 00:49:23.057
+et j'ajouterai ici surSoumettre
+
+00:49:23.057 --> 00:49:29.873
+alors voici la fonction que j'ai nommé saveUser comme ceci
+
+00:49:29.873 --> 00:49:34.309
+et je vais créer cette fonction saveUser ici
+
+00:49:35.101 --> 00:49:40.637
+const saveUser et
+j'utiliserai la fonction asyncronus
+
+00:49:40.637 --> 00:49:43.229
+et je vais capturer l'événement ici
+
+00:49:44.577 --> 00:49:51.136
+ici, je vais ajouter un empêchement par
+défaut afin que plus tard, lorsque nous soumettrons la page, elle ne se recharge pas
+
+00:49:51.136 --> 00:49:57.892
+e.preventDefault
+
+00:49:58.868 --> 00:50:02.707
+alors je vais également utiliser le bloc try &amp; catch
+
+00:50:03.451 --> 00:50:11.232
+et ici, essayez d'attendre puis axios.post
+
+00:50:11.232 --> 00:50:21.467
+alors ici le point de terminaison est http://localhost port 5000/users
+
+00:50:21.467 --> 00:50:26.169
+puis dans le deuxième paramètre les données
+que nous publierons
+
+00:50:26.169 --> 00:50:29.876
+les données sont tirées de l'état, à savoir le nom
+
+00:50:29.876 --> 00:50:32.376
+puis envoyer un e-mail
+
+00:50:32.376 --> 00:50:34.396
+puis le sexe
+
+00:50:35.047 --> 00:50:37.375
+alors s'il est enregistré avec succès
+
+00:50:37.375 --> 00:50:40.504
+je vais rediriger vers l'accueil
+
+00:50:40.504 --> 00:50:45.762
+je peux utiliser la fonction useNavigate de react-router-dom pour rediriger
+
+00:50:45.762 --> 00:50:47.969
+je vais importer ici
+
+00:50:47.969 --> 00:50:57.654
+import Je vais appeler directement ici
+useNavigate depuis react-router-dom comme ceci
+
+00:50:57.979 --> 00:51:00.869
+alors je vais créer une nouvelle variable ici
+
+00:51:00.869 --> 00:51:09.177
+const navigue = useNavigate comme ceci
+
+00:51:09.781 --> 00:51:19.650
+pour la redirection, je peux utiliser une fonction comme celle-ci naviguer puis ici / cela signifie la maison
+
+00:51:20.000 --> 00:51:24.586
+s'il y a une erreur, je consignerai l'erreur
+dans la console
+
+00:51:24.586 --> 00:51:31.229
+console.log alors ici je vais enregistrer l'erreur
+
+00:51:31.461 --> 00:51:32.941
+comme ça
+
+00:51:32.941 --> 00:51:34.588
+enregistrer
+
+00:51:35.146 --> 00:51:38.759
+retour au navigateur, recharger
+
+00:51:38.759 --> 00:51:42.503
+et je vais essayer d'ajouter de nouvelles données ici
+
+00:51:42.503 --> 00:51:51.107
+par exemple, ici l'email de
+Dhea est dhea@gmail.com
+
+00:51:51.107 --> 00:51:53.638
+alors le sexe est féminin
+
+00:51:53.638 --> 00:51:54.924
+enregistrer
+
+00:51:54.924 --> 00:52:01.444
+alors voici une autre donnée, à savoir Dhea avec un sexe féminin comme celui-ci
+
+00:52:01.444 --> 00:52:03.999
+retour à vs code
+
+00:52:03.999 --> 00:52:07.300
+puis je créerai à nouveau un composant
+
+00:52:07.300 --> 00:52:14.343
+nouveau fichier que j'ai nommé EditUser.js comme ceci
+
+00:52:14.343 --> 00:52:17.918
+et je vais changer la langue en javascript réagir
+
+00:52:19.126 --> 00:52:22.925
+puis allez dans le composant AddUser
+
+00:52:22.925 --> 00:52:27.340
+et je vais copier tout le code de
+ce composant AddUser
+
+00:52:27.340 --> 00:52:29.797
+Ctrl + Une copie
+
+00:52:29.797 --> 00:52:33.203
+et revenez au composant EditUser.js
+
+00:52:33.203 --> 00:52:35.648
+et je vais le coller ici
+
+00:52:35.973 --> 00:52:42.752
+ici, sur l'exportation par défaut, je vais changer pour EditUser
+
+00:52:42.752 --> 00:52:49.080
+alors ici sur le bouton je vais le changer en une mise à jour comme celle-ci
+
+00:52:49.080 --> 00:52:58.060
+alors ici dans la fonction je vais aussi le changer en EditUser comme ça
+
+00:52:58.060 --> 00:52:59.887
+sauvegarder
+
+00:53:00.000 --> 00:53:02.892
+puis allez sur App.js
+
+00:53:02.892 --> 00:53:06.393
+et j'ajouterai ici le composant EditUser
+
+00:53:06.393 --> 00:53:14.099
+importer EditUser à partir de composants/EditUser comme ceci
+
+00:53:14.099 --> 00:53:17.613
+alors je vais ajouter un nouvel itinéraire
+
+00:53:17.613 --> 00:53:19.857
+je vais dupliquer ça
+
+00:53:19.857 --> 00:53:24.182
+alors je vais changer le chemin d'accès à
+
+00:53:24.182 --> 00:53:31.439
+edit then / et nous devons le
+modifier en fonction du paramètre id parameter
+
+00:53:31.439 --> 00:53:34.588
+Par conséquent, je vais ajouter les paramètres ici
+
+00:53:34.588 --> 00:53:42.088
+pour ajouter un paramètre, nous pouvons utiliser deux-points comme celui-ci, puis le paramètre est id
+
+00:53:42.088 --> 00:53:48.825
+alors le composant à rendre est EditUser comme ceci
+
+00:53:49.336 --> 00:53:50.924
+enregistrer
+
+00:53:50.924 --> 00:53:53.348
+retour au navigateur
+
+00:53:53.348 --> 00:54:01.137
+si je visite localhost:3000/edit/1 par exemple
+
+00:54:01.137 --> 00:54:04.337
+alors le formulaire de mise à jour apparaîtra ici
+
+00:54:04.337 --> 00:54:08.469
+Il ne nous reste plus qu'à définir les données ici
+
+00:54:08.469 --> 00:54:10.393
+retour à vs code
+
+00:54:10.393 --> 00:54:12.987
+aller à EditUser.js
+
+00:54:12.987 --> 00:54:18.620
+ici, je vais également utiliser le crochet useEffect que j'ajouterai ici useEffect
+
+00:54:19.550 --> 00:54:24.938
+puis ici je crée une méthode pour récupérer des données uniques
+
+00:54:26.468 --> 00:54:35.687
+const j'ai nommé getUserById comme ceci
+
+00:54:35.687 --> 00:54:39.110
+je vais aussi utiliser la fonction asynchrone
+
+00:54:40.504 --> 00:54:53.773
+alors ici réponse const = attendre puis axios.get
+
+00:54:53.773 --> 00:54:58.158
+alors ici, je vais utiliser un modèle de chaîne comme celui-ci
+
+00:54:58.158 --> 00:55:04.295
+ce n'est pas une citation mais un backtick qui est à côté du numéro 1 sur votre clavier
+
+00:55:04.295 --> 00:55:10.940
+alors ici le point de terminaison est http://localhost
+
+00:55:10.940 --> 00:55:14.038
+alors le port est 5000
+
+00:55:14.038 --> 00:55:16.629
+puis /utilisateurs
+
+00:55:16.629 --> 00:55:18.667
+puis /id
+
+00:55:18.667 --> 00:55:24.152
+nous prenons l'identifiant du paramètre, à savoir l'identifiant du paramètre
+
+00:55:24.524 --> 00:55:30.533
+pour récupérer l'id du paramètre, nous pouvons utiliser useParams de react-router-dom
+
+00:55:30.533 --> 00:55:33.023
+je vais ajouter ici useParams
+
+00:55:33.674 --> 00:55:35.072
+comme ça
+
+00:55:35.072 --> 00:55:41.866
+alors ici const j'appellerai le paramètre directement ici, à savoir id
+
+00:55:41.866 --> 00:55:46.717
+égal à useParams comme ceci
+
+00:55:46.717 --> 00:55:51.861
+maintenant nous pouvons prendre
+la valeur de ce paramètre id
+
+00:55:51.861 --> 00:55:53.223
+de retour ici
+
+00:55:53.223 --> 00:56:00.111
+alors ici $ accolades comme
+ceci alors ici le paramètre est id
+
+00:56:00.111 --> 00:56:01.712
+comme ça
+
+00:56:01.712 --> 00:56:06.090
+alors je mettrai les réponses dans l'état une par une
+
+00:56:06.090 --> 00:56:16.145
+le premier est setName(response.data.name)
+
+00:56:16.145 --> 00:56:18.549
+je vais dupliquer ça
+
+00:56:19.339 --> 00:56:29.482
+puis deuxième setEmail(response.data.email)
+
+00:56:29.482 --> 00:56:32.420
+le dernier est le sexe
+
+00:56:34.047 --> 00:56:37.778
+alors voici response.data.gender
+
+00:56:39.172 --> 00:56:40.660
+comme ça
+
+00:56:40.660 --> 00:56:46.118
+alors j'appellerai cette fonction dans le crochet useEffect
+
+00:56:46.118 --> 00:56:48.623
+Je vais ajouter ici useEffect
+
+00:56:49.413 --> 00:56:51.385
+utiliserEffet
+
+00:56:54.406 --> 00:56:59.939
+alors j'appellerai
+ici getUserById comme ceci
+
+00:56:59.939 --> 00:57:03.901
+et dans le deuxième paramètre, je vais ajouter ici un tableau vide
+
+00:57:03.901 --> 00:57:06.192
+enregistrer
+
+00:57:06.192 --> 00:57:08.328
+retour au navigateur
+
+00:57:08.328 --> 00:57:11.911
+alors maintenant, les données ont été définies comme ceci
+
+00:57:11.911 --> 00:57:16.898
+L'e-mail de M Fikri puis le sexe est automatiquement sélectionné comme ceci
+
+00:57:17.177 --> 00:57:21.019
+puis nous exécutons simplement la fonction de mise à jour
+
+00:57:23.296 --> 00:57:33.032
+ici sur onSubmit je vais changer cela pour mettre à jour l'utilisateur comme ça
+
+00:57:33.032 --> 00:57:37.854
+et ici je vais aussi changer pour updateUser
+
+00:57:37.854 --> 00:57:41.254
+alors je changerai la méthode pour un patch
+
+00:57:42.044 --> 00:57:48.503
+et ici je vais le changer en une syntaxe de backtick comme celle-ci
+
+00:57:50.000 --> 00:57:54.383
+puis nous le mettons à jour en fonction de l'identifiant, j'ajouterai l'identifiant ici
+
+00:57:54.383 --> 00:57:59.617
+/$ parenthèses comme ceci puis id
+
+00:58:00.000 --> 00:58:01.399
+enregistrer
+
+00:58:01.399 --> 00:58:03.252
+retour au navigateur
+
+00:58:03.252 --> 00:58:08.066
+Je vais essayer cette mise à jour, par exemple M Fikri
+
+00:58:08.066 --> 00:58:09.238
+mettre à jour
+
+00:58:09.238 --> 00:58:13.028
+alors maintenant, il est devenu M Fikri
+
+00:58:13.028 --> 00:58:16.303
+cela signifie que notre application fonctionne
+bien
+
+00:58:16.303 --> 00:58:24.296
+alors je veux que lorsque je clique sur l'un de ces boutons d'édition, il sera
+dirigé vers le formulaire d'édition
+
+00:58:24.296 --> 00:58:26.124
+retour à vs code
+
+00:58:26.124 --> 00:58:28.773
+puis allez à UserList.js
+
+00:58:28.773 --> 00:58:32.470
+nous pouvons utiliser le lien
+de react-router-dom
+
+00:58:32.842 --> 00:58:35.010
+je vais importer ici
+
+00:58:35.335 --> 00:58:45.474
+importez alors ici le lien de react-router-dom comme celui-ci
+
+00:58:45.474 --> 00:58:50.470
+Je souhaite également ajouter un bouton au-dessus de ce tableau
+
+00:58:50.470 --> 00:58:52.339
+je vais le rajouter ici
+
+00:58:52.339 --> 00:58:54.694
+le bouton j'utilise le lien
+
+00:58:56.042 --> 00:58:57.435
+comme ça
+
+00:58:57.435 --> 00:59:02.002
+Je vais donner l'étiquette ajouter un nouveau comme celui-ci
+
+00:59:02.002 --> 00:59:04.070
+alors ici "à"
+
+00:59:04.070 --> 00:59:09.356
+et je pointerai ici pour ajouter comme ça
+
+00:59:09.356 --> 00:59:11.680
+et je donnerai cours
+
+00:59:11.680 --> 00:59:16.657
+la classe est la classe bulma, qui est un bouton
+
+00:59:16.657 --> 00:59:20.809
+alors c'est le succès
+
+00:59:20.809 --> 00:59:22.310
+enregistrer
+
+00:59:22.310 --> 00:59:28.123
+alors ici sur le
+bouton d'édition je vais aussi le changer en lien
+
+00:59:29.238 --> 00:59:31.437
+voici aussi le lien
+
+00:59:32.413 --> 00:59:39.564
+puis le lien je pointerai vers l'
+identifiant du paramètre /edit/
+
+00:59:39.564 --> 00:59:43.728
+Je vais utiliser ici backtick puis ici modifier
+
+00:59:44.146 --> 00:59:47.152
+alors son /id
+
+00:59:47.152 --> 00:59:54.084
+nous prenons l'identifiant de user.id comme ceci
+
+00:59:54.084 --> 00:59:55.452
+enregistrer
+
+00:59:55.452 --> 00:59:57.430
+retour au navigateur
+
+00:59:57.430 --> 01:00:00.296
+maintenant ici il y a un nouveau bouton ajouter
+
+01:00:00.296 --> 01:00:05.948
+si je clique sur le bouton Ajouter un nouveau, il sera dirigé vers Ajouter un utilisateur
+
+01:00:05.948 --> 01:00:07.306
+de retour
+
+01:00:07.306 --> 01:00:10.389
+si je clique sur l'un de ces boutons d'édition
+
+01:00:10.389 --> 01:00:12.152
+par exemple ici Dhea
+
+01:00:12.152 --> 01:00:16.801
+alors il redirigera ici
+/edit/4 comme ceci
+
+01:00:16.801 --> 01:00:20.956
+si je clique sur M Fikri il sera dirigé ici
+
+01:00:20.956 --> 01:00:24.508
+et les données sont définies
+directement comme ceci
+
+01:00:25.809 --> 01:00:30.498
+puis nous exécutons simplement la fonction pour le supprimer
+
+01:00:30.498 --> 01:00:35.693
+ici sur le bouton supprimer je vais ajouter ici surCliquez
+
+01:00:38.342 --> 01:00:43.721
+alors ici je vais créer la méthode deleteUser
+
+01:00:43.721 --> 01:00:46.837
+puis nous supprimons l'utilisateur par identifiant
+
+01:00:46.837 --> 01:00:53.299
+Je vais prendre
+l'identifiant de user.id comme ceci
+
+01:00:53.299 --> 01:00:59.122
+alors je vais créer la fonction deleteUser ici
+
+01:00:59.801 --> 01:01:03.541
+const deleteUser
+
+01:01:03.541 --> 01:01:09.337
+Je vais également utiliser la fonction asyncronus et nous capturons l'identifiant ici
+
+01:01:10.000 --> 01:01:13.665
+alors je vais également
+utiliser le bloc try &amp; catch
+
+01:01:14.734 --> 01:01:16.822
+et ici en essai
+
+01:01:16.822 --> 01:01:21.901
+attendre axios.delete
+
+01:01:21.901 --> 01:01:28.133
+alors voici le point final
+, je vais utiliser la chaîne de modèle ici backtick
+
+01:01:28.412 --> 01:01:37.974
+alors le port http://localhost est
+5000/users
+
+01:01:37.974 --> 01:01:40.740
+alors son /id
+
+01:01:42.553 --> 01:01:43.961
+comme ça
+
+01:01:43.961 --> 01:01:46.564
+alors s'il est supprimé avec succès
+
+01:01:46.564 --> 01:01:55.268
+J'appellerai à nouveau la méthode getUsers afin que nous puissions voir les changements de données dans l'interface utilisateur
+
+01:01:56.569 --> 01:01:59.808
+getUsers comme ça
+
+01:01:59.808 --> 01:02:03.863
+s'il y a une erreur, je consignerai l'erreur dans la console
+
+01:02:03.863 --> 01:02:09.258
+console.log puis ici erreur
+
+01:02:10.838 --> 01:02:12.467
+enregistrer
+
+01:02:12.467 --> 01:02:14.563
+retour au navigateur
+
+01:02:14.563 --> 01:02:17.686
+si je clique sur l'un des boutons de suppression
+
+01:02:18.011 --> 01:02:20.720
+puis M Fikri a disparu de la liste
+
+01:02:20.720 --> 01:02:24.528
+cela signifie que nous avons réussi à supprimer les données de la base de données
+
+01:02:24.528 --> 01:02:28.409
+Je clique à nouveau sur supprimer puis il sera à nouveau supprimé
+
+01:02:28.409 --> 01:02:32.318
+cela signifie que notre application fonctionne bien
+
+01:02:32.318 --> 01:02:43.360
+Assez de tutoriel sur la façon de créer une application fullstack en utilisant node.js, express, mysql sur le backend et réagir js sur le frontend
+
+01:02:43.360 --> 01:02:48.219
+si c'est la première fois que vous regardez une vidéo sur cette chaîne merci de vous abonner
+
+01:02:48.219 --> 01:02:50.996
+et activer la cloche de notification
+
+01:02:50.996 --> 01:02:56.422
+pour que chaque fois que je télécharge une nouvelle vidéo de cette chaîne, vous receviez une notification
+
+01:02:56.422 --> 01:03:34.475
+et à la prochaine vidéo
+
